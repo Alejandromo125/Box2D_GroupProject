@@ -26,11 +26,61 @@ bool ModuleSceneGame::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	GameScene = App->textures->Load("pinball/sceneGame.png");
-	circle = App->textures->Load("pinball/wheel.png");
+	circle = App->textures->Load("pinball/sonic_ball.png");
+	RightStick = App->textures->Load("pinball/R - Stick x52.png");
+	LeftStick = App->textures->Load("pinball/L - Stick x52.png");
+	bumpers = App->textures->Load("pinball/Obstacle-1.png");
+	RightSlider = App->textures->Load("pinball/R - Object2.png");
+	LeftSlider = App->textures->Load("pinball/L - Object2.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
 	
+	int mapPoints[72] = {
+		634,948,
+		634,854,
+		416,970,
+		416,1200,
+		284,1200,
+		284,970,
+		86,873,
+		86,707,
+		101,684,
+		116,672,
+		157,657,
+		161,647,
+		98,566,
+		98,547,
+		105,539,
+		120,533,
+		157,566,
+		150,464,
+		134,427,
+		98,296,
+		93,212,
+		110,137,
+		143,90,
+		197,52,
+		281,32,
+		431,42,
+		550,66,
+		622,97,
+		608,59,
+		596,36,
+		610,16,
+		627,15,
+		649,35,
+		667,79,
+		673,133,
+		670,948,
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints, 72));
+	
+	circles.add(App->physics->CreateCircle(652,937,18));
+	circles.getLast()->data->listener = this;
+	
+
 	return ret;
 }
 
@@ -45,18 +95,18 @@ bool ModuleSceneGame::CleanUp()
 // Update: draw background
 update_status ModuleSceneGame::Update()
 {
-
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 18));
 		circles.getLast()->data->listener = this;
 		
 	}
-
+	
 	// Prepare for raycast ------------------------------------------------------
 	
 	iPoint mouse;
