@@ -15,16 +15,16 @@
 
 Application::Application()
 {
-	renderer = new ModuleRender(this);
-	window = new ModuleWindow(this);
-	textures = new ModuleTextures(this);
-	input = new ModuleInput(this);
+	renderer = new ModuleRender(this, true);
+	window = new ModuleWindow(this, true);
+	textures = new ModuleTextures(this, true);
+	input = new ModuleInput(this, true);
 	audio = new ModuleAudio(this, true);
-	player = new ModulePlayer(this);
+	player = new ModulePlayer(this, true);
 	scene_intro = new ModuleSceneIntro(this,true);
 	scene_game = new ModuleSceneGame(this,false);
-	physics = new ModulePhysics(this);
-	fade = new ModuleFadeToBlack(this);
+	physics = new ModulePhysics(this, true);
+	fade = new ModuleFadeToBlack(this, true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order

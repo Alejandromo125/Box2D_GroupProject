@@ -11,7 +11,8 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	
+	introLogo = NULL;
+	startButton = NULL;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -23,10 +24,13 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	introLogo = App->textures->Load("pinball/intrologo1.png");
-	App->renderer->Blit(introLogo, 40, 60, NULL);
+	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	App->renderer->DrawCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 50, 255, 0, 0, 0, true);
+	introLogo = App->textures->Load("pinball/introbg.png");
+	startButton = App->textures->Load("pinball/startButton.png");
+
+	delay = 0;
+
 	
 	return ret;
 }
@@ -42,7 +46,16 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	delay++;
+		
+	App->renderer->Blit(introLogo, 0, 0, NULL, 1.0f,NULL);
 
+	if((delay / 30) % 2 == 0)
+	{
+		App->renderer->Blit(startButton, 90, 700, NULL, 1.0f, NULL);
+	}
+	
+		
 	if (App->input->GetKey(SDL_SCANCODE_SPACE)==KEY_DOWN)
 	{
 		if (App->scene_game->IsEnabled() == false)

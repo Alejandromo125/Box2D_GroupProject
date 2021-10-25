@@ -14,10 +14,14 @@ public:
 
 	bool Start();
 	update_status Update();
+	update_status postUpdate();
 	bool CleanUp();
 
 public:
 	
 	SDL_Texture* introLogo = nullptr;
+	SDL_Texture* startButton = nullptr;
+
+	int delay;
 
 };
