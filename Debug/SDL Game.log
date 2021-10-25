@@ -1,0 +1,54 @@
+﻿  ModuleSceneIntro.cpp
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(116,45): warning C4244: 'argumento': conversión de 'TYPE' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=int
+          ]
+          and
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(116,30): warning C4244: 'argumento': conversión de 'TYPE' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=int
+          ]
+          and
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(118,18): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(120,70): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(120,47): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(123,138): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(123,96): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(123,57): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(123,34): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(136,9): warning C4101: 'y': variable local sin referencia
+C:\Users\Alejandromo3\Documents\GitHub\Box2D\ModuleSceneIntro.cpp(136,6): warning C4101: 'x': variable local sin referencia
+  LINK : no se encontró C:\Users\Alejandromo3\Documents\GitHub\Box2D\Debug\2D Physics - class 4.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  SDL Game.vcxproj -> C:\Users\Alejandromo3\Documents\GitHub\Box2D\Debug\2D Physics - class 4.exe
