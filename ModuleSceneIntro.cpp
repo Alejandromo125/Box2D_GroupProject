@@ -22,6 +22,10 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+
+	introLogo = App->textures->Load("pinball/intrologo1.png");
+	App->renderer->Blit(introLogo, 40, 60, NULL);
+
 	App->renderer->DrawCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 50, 255, 0, 0, 0, true);
 	
 	return ret;

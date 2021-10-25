@@ -18,4 +18,6 @@ public:
 
 public:
 	
+	SDL_Texture* introLogo = nullptr;
+
 };
