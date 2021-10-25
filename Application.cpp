@@ -21,8 +21,8 @@ Application::Application()
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
 	player = new ModulePlayer(this);
-	scene_intro = new ModuleSceneIntro(this);
-	scene_game = new ModuleSceneGame(this);
+	scene_intro = new ModuleSceneIntro(this,true);
+	scene_game = new ModuleSceneGame(this,false);
 	physics = new ModulePhysics(this);
 	fade = new ModuleFadeToBlack(this);
 
