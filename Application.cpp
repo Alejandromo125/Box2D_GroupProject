@@ -8,6 +8,7 @@
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleSceneGame.h"
 #include "ModuleFadeToBlack.h"
 
 #include "Application.h"
@@ -21,6 +22,7 @@ Application::Application()
 	audio = new ModuleAudio(this, true);
 	player = new ModulePlayer(this);
 	scene_intro = new ModuleSceneIntro(this);
+	scene_game = new ModuleSceneGame(this);
 	physics = new ModulePhysics(this);
 	fade = new ModuleFadeToBlack(this);
 
@@ -39,6 +41,7 @@ Application::Application()
 	
 	// Scenes
 	AddModule(scene_intro);
+	AddModule(scene_game);
 	
 	// Player
 	AddModule(player);
