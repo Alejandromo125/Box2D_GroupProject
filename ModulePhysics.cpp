@@ -281,7 +281,7 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
-			
+			/* Comentado porque da error
 			if (f->GetShape()->TestPoint(b->GetTransform(),) == true)
 			{
 				// Get current mouse position
@@ -300,6 +300,7 @@ update_status ModulePhysics::PostUpdate()
 				// Add the new mouse joint into the World
 				mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
 			}
+			//*/
 		}
 	}
 	
