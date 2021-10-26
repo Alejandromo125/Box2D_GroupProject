@@ -32,6 +32,7 @@ bool ModuleSceneGame::Start()
 	bumpers = App->textures->Load("pinball/Obstacle-1.png");
 	RightSlider = App->textures->Load("pinball/R - Object2.png");
 	LeftSlider = App->textures->Load("pinball/L - Object2.png");
+
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
@@ -84,6 +85,116 @@ bool ModuleSceneGame::Start()
 	};
 
 	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 88));
+
+	// Pivot 0, 0
+	int mapPoints2[36] = {
+		519, 362,
+		559, 331,
+		679, 189,
+		685, 147,
+		670, 104,
+		644, 77,
+		613, 66,
+		581, 61,
+		551, 65,
+		554, 70,
+		580, 65,
+		611, 69,
+		642, 81,
+		665, 106,
+		680, 143,
+		675, 189,
+		556, 328,
+		520, 352
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints2, 36));
+
+	int mapPoints3[8] = {
+	107, 308,
+	90, 232,
+	86, 248,
+	101, 302
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints3, 8));
+
+	int mapPoints4[38] = {
+	394, 90,
+	392, 139,
+	337, 138,
+	290, 152,
+	245, 185,
+	231, 221,
+	236, 260,
+	259, 312,
+	219, 238,
+	189, 237,
+	169, 259,
+	168, 293,
+	164, 294,
+	114, 142,
+	141, 116,
+	180, 98,
+	233, 89,
+	303, 85,
+	327, 78
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints4, 38));
+
+	int mapPoints5[30] = {
+	302, 279,
+	287, 249,
+	286, 221,
+	306, 196,
+	336, 181,
+	389, 179,
+	382, 189,
+	379, 224,
+	375, 192,
+	360, 187,
+	340, 185,
+	308, 199,
+	289, 225,
+	291, 246,
+	309, 276
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints5, 30));
+
+	int mapPoints6[6] = {
+	229, 824,
+	169, 801,
+	172, 731
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints6, 6));
+
+	int mapPoints7[6] = {
+	474, 820,
+	526, 797,
+	526, 732
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints7, 6));
+
+	int mapPoints8[24] = {
+	341, 421,
+	329, 421,
+	328, 401,
+	316, 386,
+	298, 383,
+	282, 385,
+	272, 395,
+	266, 387,
+	285, 377,
+	310, 375,
+	329, 387,
+	339, 400
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints8, 24));
 	
 	circles.add(App->physics->CreateCircle(652,937,18));
 	circles.getLast()->data->listener = this;
@@ -105,9 +216,6 @@ bool ModuleSceneGame::CleanUp()
 update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
-
-	
-
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
