@@ -36,50 +36,87 @@ bool ModuleSceneGame::Start()
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
 	
-	int mapPoints[72] = {
-		634,948,
-		634,854,
-		416,970,
-		416,1200,
-		284,1200,
-		284,970,
-		86,873,
-		86,707,
-		101,684,
-		116,672,
-		157,657,
-		161,647,
-		98,566,
-		98,547,
-		105,539,
-		120,533,
-		157,566,
-		150,464,
-		134,427,
-		98,296,
-		93,212,
-		110,137,
-		143,90,
-		197,52,
-		281,32,
-		431,42,
-		550,66,
-		622,97,
-		608,59,
-		596,36,
-		610,16,
-		627,15,
-		649,35,
-		667,79,
-		673,133,
-		670,948,
+	int mapPoints1[88] = {
+	685, 897,
+	740, 895,
+	738, 163,
+	716, 87,
+	660, 41,
+	591, 16,
+	502, 43,
+	327, 27,
+	193, 40,
+	101, 79,
+	49, 133,
+	24, 251,
+	48, 370,
+	91, 463,
+	102, 559,
+	66, 530,
+	29, 543,
+	28, 573,
+	106, 651,
+	61, 666,
+	27, 707,
+	97, 714,
+	98, 828,
+	240, 878,
+	240, 897,
+	262, 906,
+	262, 1137,
+	431, 1138,
+	428, 907,
+	454, 893,
+	661, 800,
+	666, 653,
+	628, 655,
+	661, 624,
+	661, 510,
+	589, 513,
+	656, 462,
+	661, 393,
+	686, 358,
+	685, 260,
+	574, 396,
+	569, 391,
+	691, 247,
+	682, 878
 	};
 
-	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints, 72));
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 88));
 	
+	//HAVE TO REPOSITION FLIPPERS 
+	int RightFlipper[14] = {
+		72, 5,
+		65, 0,
+		2, 6,
+		0, 12,
+		4, 16,
+		64, 18,
+		72, 14
+	};
+	int LeftFlipper[14] = {
+		0, 10,
+		2, 3,
+		10, 1,
+		69, 6,
+		72, 11,
+		68, 17,
+		5, 18
+	};
+
+	RightStickBody = App->physics->CreateFlipper(327, 475, RightFlipper, 14);
+	LeftStickBody = App->physics->CreateFlipper(206, 455, LeftFlipper, 14);
+	LeftStickAnchor = App->physics->CreateStaticCircle(110, 457, 3);
+	RightStickAnchor = App->physics->CreateStaticCircle(265, 457, 3);
+
+	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
+	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
+
 	circles.add(App->physics->CreateCircle(652,937,18));
 	circles.getLast()->data->listener = this;
 	
+	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
 
 	return ret;
 }
@@ -97,17 +134,42 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
-	bumpersBodys.add(App->physics->CreateBumper(452,286,26));
-	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
-	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
+
+	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+
 
 	
 
+
+
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		
+
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 18));
 		circles.getLast()->data->listener = this;
+
+	}
+	if (ballLaunched == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			circles.getLast()->data->body->ApplyForce({ 0,-450 }, { 0, 0 }, true);
+			ballLaunched = true;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		LeftStickBody->body->ApplyForce({ 5,60 }, { 0,0 }, true);
+		
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+		{
+			LeftStickBody->body->ApplyForce({ -5,-60 }, { 0,0 }, true);
+		}
 		
 	}
 	
