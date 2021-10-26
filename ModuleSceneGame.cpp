@@ -105,10 +105,10 @@ bool ModuleSceneGame::Start()
 		5, 18
 	};
 
-	RightStickBody = App->physics->CreateFlipper(226, 884, RightFlipper, 14);
-	LeftStickBody = App->physics->CreateFlipper(467, 884, LeftFlipper, 14);
-	LeftStickAnchor = App->physics->CreateStaticCircle(226, 884, 3);
-	RightStickAnchor = App->physics->CreateStaticCircle(467, 884, 3);
+	RightStickBody = App->physics->CreateFlipper(467, 700, RightFlipper, 14);
+	LeftStickBody = App->physics->CreateFlipper(226, 700, LeftFlipper, 14);
+	LeftStickAnchor = App->physics->CreateStaticCircle(226, 700, 3);
+	RightStickAnchor = App->physics->CreateStaticCircle(467, 700, 3);
 
 	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
 	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
