@@ -25,6 +25,7 @@ bool ModuleSceneGame::Start()
 	
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+
 	GameScene = App->textures->Load("pinball/sceneGame.png");
 	circle = App->textures->Load("pinball/sonic_ball.png");
 	RightStick = App->textures->Load("pinball/R - Stick x52.png");
