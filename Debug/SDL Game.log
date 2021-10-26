@@ -1,2 +1,4 @@
-﻿  ModuleSceneIntro.cpp
+﻿  ModuleSceneGame.cpp
+  ModuleSceneIntro.cpp
+  Generando código...
   SDL Game.vcxproj -> C:\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe
