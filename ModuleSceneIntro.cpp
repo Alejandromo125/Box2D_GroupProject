@@ -28,7 +28,7 @@ bool ModuleSceneIntro::Start()
 
 	introLogo = App->textures->Load("pinball/introbg.png");
 	startButton = App->textures->Load("pinball/startButton.png");
-	App->audio->PlayMusic("pinball/capitolio.ogg", 0.0f);
+	App->audio->PlayMusic("pinball/capitolio2.ogg", 0.0f);
 
 	delay = 0;
 
