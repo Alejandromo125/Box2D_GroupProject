@@ -354,3 +354,9 @@ MigrationBackup/
 *.recipe
 *.ilk
 *.pdb
+*.tlog
+*.tlog
+*.lastbuildstate
+*.ilk
+*.pdb
+*.exe

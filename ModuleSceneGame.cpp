@@ -134,6 +134,7 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
+<<<<<<< HEAD
 
 	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
 	bumpersBodys.getLast()->data->listener = this;
@@ -142,6 +143,9 @@ update_status ModuleSceneGame::Update()
 	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
 	bumpersBodys.getLast()->data->listener = this;
 
+=======
+	
+>>>>>>> 66397ea4a5f924ca4c7d30244b74dc7c0a9bd7d9
 
 	
 
