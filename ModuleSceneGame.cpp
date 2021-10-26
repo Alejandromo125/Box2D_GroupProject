@@ -116,7 +116,7 @@ bool ModuleSceneGame::Start()
 	circles.add(App->physics->CreateCircle(652,937,18));
 	circles.getLast()->data->listener = this;
 	
-	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
+	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
 
 	return ret;
 }
@@ -134,7 +134,7 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
-<<<<<<< HEAD
+
 
 	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
 	bumpersBodys.getLast()->data->listener = this;
@@ -142,14 +142,6 @@ update_status ModuleSceneGame::Update()
 	bumpersBodys.getLast()->data->listener = this;
 	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
 	bumpersBodys.getLast()->data->listener = this;
-
-=======
-	
->>>>>>> 66397ea4a5f924ca4c7d30244b74dc7c0a9bd7d9
-
-	
-
-
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
