@@ -3,5 +3,4 @@ C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(113,105): warning C4244: 'argum
 C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(113,67): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
 C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(114,107): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
 C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(114,68): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
-  LINK : C:\GITHUB\Box2D_GroupProject\Debug\2D Physics - class 4.exe not found or not built by the last incremental link; performing full link
   SDL Game.vcxproj -> C:\GITHUB\Box2D_GroupProject\Debug\2D Physics - class 4.exe

@@ -105,19 +105,17 @@ bool ModuleSceneGame::Start()
 		5, 18
 	};
 
-	RightStickBody = App->physics->CreateFlipper(327, 475, RightFlipper, 14);
-	LeftStickBody = App->physics->CreateFlipper(206, 455, LeftFlipper, 14);
-	LeftStickAnchor = App->physics->CreateStaticCircle(110, 457, 3);
-	RightStickAnchor = App->physics->CreateStaticCircle(265, 457, 3);
+	RightStickBody = App->physics->CreateFlipper(226, 884, RightFlipper, 14);
+	LeftStickBody = App->physics->CreateFlipper(467, 884, LeftFlipper, 14);
+	LeftStickAnchor = App->physics->CreateStaticCircle(226, 884, 3);
+	RightStickAnchor = App->physics->CreateStaticCircle(467, 884, 3);
 
 	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
 	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
 
-	circles.add(App->physics->CreateCircle(652,937,18));
+	circles.add(App->physics->CreateCircle(714,870,18));
 	circles.getLast()->data->listener = this;
 	
-	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
-
 	return ret;
 }
 
@@ -160,11 +158,11 @@ update_status ModuleSceneGame::Update()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		LeftStickBody->body->ApplyForce({ 5,60 }, { 0,0 }, true);
+		LeftStickBody->body->ApplyForce({ 80,100 }, { 0,0 }, true);
 		
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 		{
-			LeftStickBody->body->ApplyForce({ -5,-60 }, { 0,0 }, true);
+			LeftStickBody->body->ApplyForce({ -80,-100 }, { 0,0 }, true);
 		}
 		
 	}
