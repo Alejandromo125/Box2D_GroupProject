@@ -87,28 +87,30 @@ bool ModuleSceneGame::Start()
 	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 88));
 
 	// Pivot 0, 0
-	int mapPoints2[36] = {
-		519, 362,
-		559, 331,
-		679, 189,
-		685, 147,
-		670, 104,
-		644, 77,
-		613, 66,
-		581, 61,
-		551, 65,
-		554, 70,
-		580, 65,
-		611, 69,
-		642, 81,
-		665, 106,
-		680, 143,
-		675, 189,
-		556, 328,
-		520, 352
+	int mapPoints2[40] = {
+	522, 365,
+	558, 332,
+	671, 197,
+	683, 173,
+	684, 138,
+	664, 96,
+	647, 79,
+	609, 67,
+	575, 65,
+	553, 73,
+	561, 75,
+	580, 71,
+	600, 71,
+	622, 76,
+	649, 89,
+	663, 105,
+	679, 136,
+	679, 173,
+	558, 326,
+	517, 361
 	};
 
-	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints2, 36));
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints2, 40));
 
 	int mapPoints3[8] = {
 	107, 308,
