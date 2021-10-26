@@ -63,6 +63,7 @@ update_status ModuleSceneIntro::Update()
 		{
 			App->scene_game->Enable();
 		}
+		App->scene_intro->Disable();
 		
 		App->fade->FadeToBlack(this, (Module*)App->scene_game, 90);
 	}
