@@ -97,6 +97,10 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
+	bumpersBodys.add(App->physics->CreateBumper(452,286,26));
+	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
+	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
+
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)

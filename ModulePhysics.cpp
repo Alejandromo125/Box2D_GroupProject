@@ -90,6 +90,30 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateBumper(int x, int y, int radius)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2CircleShape shape;
+	shape.m_radius = PIXEL_TO_METERS(radius);
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = radius;
+
+	return pbody;
+}
+
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 {
 	b2BodyDef body;
@@ -257,20 +281,24 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			// test if the current body contains mouse position
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+			
+			if (f->GetShape()->TestPoint(b->GetTransform(),) == true)
 			{
+				// Get current mouse position
 
-				int x, y;
-				SDL_GetMouseState(&x, &y);
-				mouse_position = { PIXEL_TO_METERS(x),PIXEL_TO_METERS(y) };
-				if ((b->GetFixtureList()->GetShape()->TestPoint(b->GetTransform(),mouse_position))==true)
-				{
-					body_clicked=b;
-				}
-				
+				// Define new mouse joint
+				b2PrismaticJointDef jointDef;
+				b2Vec2 worldAxis(1.0f, 0.0f);
+				jointDef.Initialize(b, myBodyB, myBodyA->GetWorldCenter(), worldAxis);
+				jointDef.lowerTranslation = -5.0f;
+				jointDef.upperTranslation = 2.5f;
+				jointDef.enableLimit = true;
+				jointDef.maxMotorForce = 1.0f;
+				jointDef.motorSpeed = 0.0f;
+				jointDef.enableMotor = true;
+
+				// Add the new mouse joint into the World
+				mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
 			}
 		}
 	}
