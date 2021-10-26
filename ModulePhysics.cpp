@@ -5,7 +5,6 @@
 #include "ModulePhysics.h"
 #include "p2Point.h"
 #include "math.h"
-#include "ModuleSceneGame.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -16,7 +15,8 @@
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	world = NULL;
-	debug = false;
+	mouse_joint = NULL;
+	debug = true;
 }
 
 // Destructor
@@ -43,7 +43,7 @@ bool ModulePhysics::Start()
 	body.position.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(10));
 
 	b2Body* playZone = world->CreateBody(&body);
-
+	
 	return true;
 }
 
@@ -90,7 +90,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateStaticCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateBumper(int x, int y, int radius)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -139,41 +139,6 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateFlipper(int x, int y, int* points, int size)
-{
-	b2BodyDef body;
-	body.type = b2_dynamicBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* b = world->CreateBody(&body);
-
-	b2PolygonShape box;
-	b2Vec2* p = new b2Vec2[size / 2];
-
-	for (uint i = 0; i < size / 2; ++i)
-	{
-		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
-		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
-	}
-
-	box.Set(p, size / 2);
-
-	b2FixtureDef fixture;
-	fixture.shape = &box;
-	fixture.density = 1.0f;
-
-	b->CreateFixture(&fixture);
-
-	delete p;
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = pbody->height = 0;
-
-	return pbody;
-}
-
 PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
 {
 	b2BodyDef body;
@@ -197,8 +162,6 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	b->SetUserData(pbody);
 	pbody->width = width;
 	pbody->height = height;
-
-
 
 	return pbody;
 }
@@ -318,47 +281,56 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
+			/* Comentado porque da error
+			if (f->GetShape()->TestPoint(b->GetTransform(),) == true)
+			{
+				// Get current mouse position
 
+				// Define new mouse joint
+				b2PrismaticJointDef jointDef;
+				b2Vec2 worldAxis(1.0f, 0.0f);
+				jointDef.Initialize(b, myBodyB, myBodyA->GetWorldCenter(), worldAxis);
+				jointDef.lowerTranslation = -5.0f;
+				jointDef.upperTranslation = 2.5f;
+				jointDef.enableLimit = true;
+				jointDef.maxMotorForce = 1.0f;
+				jointDef.motorSpeed = 0.0f;
+				jointDef.enableMotor = true;
 
-			//PRISMATIC JOINT CREATION  (ASK TEACHER ABOUT GETTING BODY)
-
-			b2PrismaticJointDef jointDef;
-			b2Vec2 worldAxis(1.0f, 0.0f);
-			jointDef.Initialize(App->scene_game->bumpersBodys.getLast()->data->body, App->scene_game->circles.getLast()->data->body, App->scene_game->bumpersBodys.getLast()->data->body->GetWorldCenter(), worldAxis);
-			jointDef.lowerTranslation = -5.0f;
-			jointDef.upperTranslation = 2.5f;
-			jointDef.enableLimit = true;
-			jointDef.maxMotorForce = 1.0f;
-			jointDef.motorSpeed = 0.0f;
-			jointDef.enableMotor = true;
-
-			BumperJoint = (b2PrismaticJoint*)App->physics->world->CreateJoint(&jointDef);
-
-			//REVOLUTE JOINT CREATION
-			b2RevoluteJointDef Def;
-			Def.bodyA = App->scene_game->LeftStickBody->body;
-			Def.bodyB = App->scene_game->LeftStickAnchor->body;
-			Def.collideConnected = false;
-			Def.upperAngle = 25 * DEGTORAD;
-			Def.lowerAngle = -25 * DEGTORAD;
-			Def.enableLimit = true;
-			Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
-			l_stick = (b2RevoluteJoint*)world->CreateJoint(&Def);
-
-			b2RevoluteJointDef Def2;
-			Def2.bodyA = App->scene_game->RightStickBody->body;
-			Def2.bodyB = App->scene_game->RightStickAnchor->body;
-			Def2.collideConnected = false;
-			Def2.upperAngle = 30 * DEGTORAD;
-			Def2.lowerAngle = -25 * DEGTORAD;
-			Def2.enableLimit = true;
-			Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
-			r_stick = (b2RevoluteJoint*)world->CreateJoint(&Def2);
-			
-			
-		
-			
+				// Add the new mouse joint into the World
+				mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
+			}
+			//*/
 		}
+	}
+	
+	// If a body was selected we will attach a mouse joint to it
+	// so we can pull it around
+	// TODO 2: If a body was selected, create a mouse joint
+	// using mouse_joint class property
+	if (body_clicked)
+	{
+		b2MouseJointDef def;
+		def.bodyA = ground;
+		def.bodyB = body_clicked;
+		def.target.Set(mouse_position.x,mouse_position.y);
+		def.dampingRatio = 0.5f;
+		def.frequencyHz = 2.0f;
+		def.maxForce = 1000.0f * body_clicked->GetMass();
+		mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
+	}
+	// TODO 3: If the player keeps pressing the mouse button, update
+	// target position and draw a red line between both anchor points
+	
+	// TODO 4: If the player releases the mouse button, destroy the joint
+	if ((App->input->GetMouseButton(SDL_BUTTON_LEFT)) == KEY_UP)
+	{
+		if (mouse_joint)
+		{
+			world->DestroyJoint(mouse_joint);
+			mouse_joint = NULL;
+		}
+			
 	}
 	
 	return UPDATE_CONTINUE;

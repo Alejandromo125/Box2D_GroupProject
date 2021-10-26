@@ -1,6 +1,13 @@
-﻿  ModuleSceneGame.cpp
-C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(113,105): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
-C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(113,67): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
-C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(114,107): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
-C:\GITHUB\Box2D_GroupProject\ModuleSceneGame.cpp(114,68): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
-  SDL Game.vcxproj -> C:\GITHUB\Box2D_GroupProject\Debug\2D Physics - class 4.exe
+﻿  Application.cpp
+  ModulePhysics.cpp
+C:\GitHub\Box2D_GroupProject\ModulePhysics.cpp(136,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\GitHub\Box2D_GroupProject\ModulePhysics.cpp(137,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\GitHub\Box2D_GroupProject\ModulePhysics.cpp(180,20): warning C4018: '<': no coinciden signed/unsigned
+C:\GitHub\Box2D_GroupProject\ModulePhysics.cpp(398,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\GitHub\Box2D_GroupProject\ModulePhysics.cpp(399,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\GitHub\Box2D_GroupProject\ModulePhysics.cpp(405,27): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
+  ModuleSceneGame.cpp
+  ModuleSceneIntro.cpp
+  Generando código...
+  LINK : no se encontró C:\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  SDL Game.vcxproj -> C:\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe
