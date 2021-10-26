@@ -36,10 +36,9 @@ bool ModuleSceneGame::Start()
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
 	
-	int mapPoints1[54] =
-	{
-	745, 1097,
-	745, 993,
+	int mapPoints1[88] = {
+	685, 897,
+	740, 895,
 	738, 163,
 	716, 87,
 	660, 41,
@@ -64,14 +63,32 @@ bool ModuleSceneGame::Start()
 	240, 878,
 	240, 897,
 	262, 906,
-	261, 1100
+	262, 1137,
+	431, 1138,
+	428, 907,
+	454, 893,
+	661, 800,
+	666, 653,
+	628, 655,
+	661, 624,
+	661, 510,
+	589, 513,
+	656, 462,
+	661, 393,
+	686, 358,
+	685, 260,
+	574, 396,
+	569, 391,
+	691, 247,
+	682, 878
 	};
 
-	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 72));
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 88));
 	
 	circles.add(App->physics->CreateCircle(652,937,18));
 	circles.getLast()->data->listener = this;
 	
+	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
 
 	return ret;
 }
@@ -89,9 +106,7 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
-	bumpersBodys.add(App->physics->CreateBumper(452,286,26));
-	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
-	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
+	
 
 	
 

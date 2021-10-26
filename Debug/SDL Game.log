@@ -1,11 +1,2 @@
-<<<<<<< HEAD
 ﻿  ModuleSceneGame.cpp
-<<<<<<< Updated upstream
-  LINK : no se encontró C:\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
-=======
->>>>>>> Stashed changes
   SDL Game.vcxproj -> C:\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe
-=======
-﻿  ModuleSceneIntro.cpp
-  SDL Game.vcxproj -> C:\GITHUB\Box2D_GroupProject\Debug\2D Physics - class 4.exe
->>>>>>> 9b2a238f67c4987b24dc040b5cf550134d99343d
