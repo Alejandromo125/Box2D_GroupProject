@@ -44,9 +44,10 @@ public:
 
 	PhysBody* CreateCircle(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateFlipper(int x, int y, int* points, int size);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
-	PhysBody* CreateBumper(int x, int y, int radius);
+	PhysBody* CreateStaticCircle(int x, int y, int radius);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
@@ -55,8 +56,8 @@ private:
 
 	bool debug;
 	b2World* world;
-	b2MouseJoint* mouse_joint; 
-	b2Vec2 mouse_position;
-	b2Body* body_clicked;
+	b2PrismaticJoint* BumperJoint; 
+	b2RevoluteJoint* l_stick;
+	b2RevoluteJoint* r_stick;
 	b2Body* ground;
 };

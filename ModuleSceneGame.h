@@ -20,12 +20,16 @@ public:
 public:
 
 	p2List<PhysBody*> circles;
-	p2List<PhysBody*> bumpersBodys;
+	p2List< PhysBody*> bumpersBodys;
 	PhysBody* LeftStickBody;
+	PhysBody* LeftStickAnchor;
 	PhysBody* RightStickBody;
+	PhysBody* RightStickAnchor;
 	PhysBody* LeftSliderBody;
 	PhysBody* RightSliderBody;
 	p2List<PhysBody*> mapLimits;
+	
+	
 
 	PhysBody* sensor;
 	bool sensed;
@@ -42,4 +46,6 @@ public:
 	bool ray_on;
 
 	SDL_Texture* GameScene = nullptr;
+
+	bool ballLaunched = false;
 };

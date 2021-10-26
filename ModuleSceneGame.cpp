@@ -196,11 +196,37 @@ bool ModuleSceneGame::Start()
 
 	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints8, 24));
 	
-	circles.add(App->physics->CreateCircle(652,937,18));
+	//HAVE TO REPOSITION FLIPPERS 
+	int RightFlipper[14] = {
+		72, 5,
+		65, 0,
+		2, 6,
+		0, 12,
+		4, 16,
+		64, 18,
+		72, 14
+	};
+	int LeftFlipper[14] = {
+		0, 10,
+		2, 3,
+		10, 1,
+		69, 6,
+		72, 11,
+		68, 17,
+		5, 18
+	};
+
+	RightStickBody = App->physics->CreateFlipper(467, 700, RightFlipper, 14);
+	LeftStickBody = App->physics->CreateFlipper(226, 700, LeftFlipper, 14);
+	LeftStickAnchor = App->physics->CreateStaticCircle(226, 700, 3);
+	RightStickAnchor = App->physics->CreateStaticCircle(467, 700, 3);
+
+	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
+	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
+
+	circles.add(App->physics->CreateCircle(714,870,18));
 	circles.getLast()->data->listener = this;
 	
-	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
-
 	return ret;
 }
 
@@ -216,13 +242,43 @@ bool ModuleSceneGame::CleanUp()
 update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
+<<<<<<< HEAD
 	
+=======
+
+
+
+	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+>>>>>>> 53339c38554793d983edbbf702d31d5f0e3aadb8
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		
+
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 18));
 		circles.getLast()->data->listener = this;
+
+	}
+	if (ballLaunched == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			circles.getLast()->data->body->ApplyForce({ 0,-450 }, { 0, 0 }, true);
+			ballLaunched = true;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		LeftStickBody->body->ApplyForce({ 80,100 }, { 0,0 }, true);
+		
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+		{
+			LeftStickBody->body->ApplyForce({ -80,-100 }, { 0,0 }, true);
+		}
 		
 	}
 	
