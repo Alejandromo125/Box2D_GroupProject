@@ -68,6 +68,7 @@ update_status ModuleSceneIntro::Update()
 		App->fade->FadeToBlack(this, (Module*)App->scene_game, 90);
 	}
 
+
 	return UPDATE_CONTINUE;
 }
 
