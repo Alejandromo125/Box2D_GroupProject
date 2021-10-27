@@ -52,6 +52,7 @@ bool ModuleSceneGame::Start()
 	bumpers = App->textures->Load("pinball/Obstacle-1.png");
 	RightSlider = App->textures->Load("pinball/R - Object2.png");
 	LeftSlider = App->textures->Load("pinball/L - Object2.png");
+	FrontGame = App->textures->Load("pinball/Front-Background-Pro.png");
 
 	flecha1 = App->textures->Load("pinball/flecha1.png");
 	flecha2 = App->textures->Load("pinball/flecha2.png");
@@ -358,6 +359,15 @@ update_status ModuleSceneGame::Update()
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 		{
 			LeftStickBody->body->ApplyForce({ -5,-60 }, { 0,0 }, true);
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		RightStickBody->body->ApplyForce({ -5,60 }, { 0,0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+		{
+			RightStickBody->body->ApplyForce({ 5,-60 }, { 0,0 }, true);
 		}
 	}
 	// Prepare for raycast ------------------------------------------------------
