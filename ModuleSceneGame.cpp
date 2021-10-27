@@ -249,7 +249,7 @@ bool ModuleSceneGame::Start()
 		5, 18
 	};
 
-	RightStickBody = App->physics->CreateFlipper(327, 457, RightFlipper, 14);
+	RightStickBody = App->physics->CreateFlipper(327, 882, RightFlipper, 14);
 	LeftStickBody = App->physics->CreateFlipper(366, 882, LeftFlipper, 14);
 	LeftStickAnchor = App->physics->CreateStaticCircle(223, 882, 3);
 	RightStickAnchor = App->physics->CreateStaticCircle(466, 882, 3);
@@ -331,8 +331,8 @@ update_status ModuleSceneGame::Update()
 
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
-	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f,LeftStickBody->body->GetAngle());
-	App->renderer->Blit(RightStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f, RightStickBody->body->GetAngle());
+	App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
+	App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
 
 	if (delay > 10)
 	{
