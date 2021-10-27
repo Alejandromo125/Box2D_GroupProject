@@ -276,6 +276,19 @@ bool ModuleSceneGame::Start()
 
 	App->physics->CreateBouncerJoint();
 
+	/*
+	App->player->player->body->DestroyFixture(App->player->player->body->GetFixtureList());
+	App->player->createball = true;
+	b2Filter b;
+	b.categoryBits = ON;
+	b.maskBits = ON | OFF;
+
+	b.categoryBits = DISABLE;
+	b.maskBits = DISABLE;
+	*/
+
+	App->player->createball = true;
+
 	delay = 0;
 	delay2 = 0;
 	delay3 = 0;
@@ -446,8 +459,15 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		{
 			filter.categoryBits = 0x0002;
 			filter.maskBits = 0x0002 | 0x0001;
+
+			b2Vec2 position;
+			position.x = 688;
+			position.y = 820;
+
 			LOG("Player Collision");
 			App->player->player->body->GetFixtureList()->SetFilterData(filter);
+			App->player->player->body->SetTransform(position, 1.0f);
+			//App->player->createball = true;
 
 			App->audio->PlayFx(bonus_fx);
 		}

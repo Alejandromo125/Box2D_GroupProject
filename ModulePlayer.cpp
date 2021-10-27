@@ -41,7 +41,7 @@ update_status ModulePlayer::Update()
 	if (createball == true)
 	{
 		//App->audio->PlayFx(ball_spawn_sound);
-		player = App->physics->CreateCircle(354, 311, 8);
+		player = App->physics->CreateCircle(688, 820, 18);
 		player->listener = App->scene_game;
 		b2Filter b;
 		b.categoryBits = 0x0001;
