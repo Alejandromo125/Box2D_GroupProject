@@ -52,7 +52,7 @@ bool ModuleSceneGame::Start()
 	bumpers = App->textures->Load("pinball/Obstacle-1.png");
 	RightSlider = App->textures->Load("pinball/R - Object2.png");
 	LeftSlider = App->textures->Load("pinball/L - Object2.png");
-	FrontGameScene = App->textures->Load("pinball/Front-Background-Pro.png");
+	FrontGameScene = App->textures->Load("pinball/Front-Background.png");
 
 	flecha1 = App->textures->Load("pinball/flecha1.png");
 	flecha2 = App->textures->Load("pinball/flecha2.png");
@@ -297,8 +297,8 @@ update_status ModuleSceneGame::Update()
 
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 
-	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
-	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
+	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f,LeftStickBody->body->GetAngle());
+	App->renderer->Blit(RightStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f, RightStickBody->body->GetAngle());
 
 	if (delay > 10)
 	{
@@ -390,6 +390,8 @@ update_status ModuleSceneGame::Update()
 		c = c->next;
 	}
 
+	App->renderer->Blit(FrontGameScene, 0, 0, NULL, 1.0f, NULL);
+	
 
 	return UPDATE_CONTINUE;
 }
