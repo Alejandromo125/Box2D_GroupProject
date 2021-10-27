@@ -40,10 +40,18 @@ public:
 	SDL_Texture* RightSlider;
 	SDL_Texture* LeftSlider;
 	SDL_Texture* bumpers;
+	SDL_Texture* flecha1 = nullptr;
+	SDL_Texture* flecha2 = nullptr;
+	SDL_Texture* flecha3 = nullptr;
+	SDL_Texture* flecha4 = nullptr;
+	SDL_Texture* flecha5 = nullptr;
+	SDL_Texture* flecha6 = nullptr;
 
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
-
+	int delay;
+	int delay2;
+	int delay3;
 	SDL_Texture* GameScene = nullptr;
 };
