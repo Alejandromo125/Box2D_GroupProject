@@ -6,6 +6,9 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "p2List.h"
+#include "p2Point.h"
+#include "ModulePlayer.h"
 
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -24,6 +27,11 @@ bool ModuleSceneGame::Start()
 {
 	LOG("Loading Game assets");
 	bool ret = true;
+
+	b2Filter filter; //it is b in copy
+
+	filter.categoryBits = 1;
+	//filter.maskBits = true;
 	
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -37,7 +45,11 @@ bool ModuleSceneGame::Start()
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
-	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
+
+
+	sensorLow = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
+	sensorLow->listener = this;
+	sensorLow->body->GetFixtureList()->SetFilterData(filter);
 	
 	int mapPoints1[80] = {
 	685, 897,
@@ -320,5 +332,9 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		bodyB->GetPosition(x, y);
 		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
 	}
-	
+
+	if (bodyA->body == App->player->player->body && bodyB->body == sensorLow->body)
+	{
+		
+	}
 }

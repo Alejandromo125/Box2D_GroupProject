@@ -8,6 +8,7 @@
 #include "ModulePhysics.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneGame.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -62,6 +63,10 @@ update_status ModuleSceneIntro::Update()
 		if (App->scene_game->IsEnabled() == false)
 		{
 			App->scene_game->Enable();
+		}
+		if (App->player->IsEnabled() == false)
+		{
+			App->player->Enable();
 		}
 		App->scene_intro->Disable();
 		
