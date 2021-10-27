@@ -259,8 +259,7 @@ bool ModuleSceneGame::Start()
 
 	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints8, 24));
 	
-	circles.add(App->physics->CreateCircle(712,814,18));
-	circles.getLast()->data->listener = this;
+	//circles.add(App->physics->CreateCircle(712,814,18));
 	
 	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
 	bumpersBodys.getLast()->data->listener = this;
@@ -288,6 +287,7 @@ bool ModuleSceneGame::Start()
 	*/
 
 	App->player->createball = true;
+	//App->player->player->body.getLast()->data->listener = this; <-- Al parecer no
 
 	delay = 0;
 	delay2 = 0;
@@ -466,8 +466,8 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 			LOG("Player Collision");
 			App->player->player->body->GetFixtureList()->SetFilterData(filter);
-			App->player->player->body->SetTransform(position, 1.0f);
-			//App->player->createball = true;
+			//App->player->player->body->DestroyFixture();
+			App->player->createball = true;
 
 			App->audio->PlayFx(bonus_fx);
 		}

@@ -33,6 +33,7 @@ bool ModuleSceneIntro::Start()
 
 	delay = 0;
 
+	//App->player->createball = false;
 	
 	return ret;
 }

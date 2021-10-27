@@ -20,7 +20,7 @@ Application::Application()
 	textures = new ModuleTextures(this, true);
 	input = new ModuleInput(this, true);
 	audio = new ModuleAudio(this, true);
-	player = new ModulePlayer(this, true);
+	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this,true);
 	scene_game = new ModuleSceneGame(this,false);
 	physics = new ModulePhysics(this, true);
