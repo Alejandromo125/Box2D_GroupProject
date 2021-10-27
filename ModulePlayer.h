@@ -19,6 +19,8 @@ public:
 	SDL_Texture* graphics;
 	PhysBody* player;
 
+	bool createball = true;
+
 	int playerX;
 	int playerY;
 

@@ -67,6 +67,8 @@ bool ModuleSceneGame::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 
+	filter.categoryBits = 0x0001;
+	filter.maskBits = 0x0001;
 
 	sensorLow = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
 	sensorLow->listener = this;
@@ -285,6 +287,25 @@ bool ModuleSceneGame::Start()
 bool ModuleSceneGame::CleanUp()
 {
 	LOG("Unloading Game scene");
+	//App->textures->Unload(basic_sprites);
+	App->textures->Unload(circle);
+	App->textures->Unload(GameScene);
+	App->textures->Unload(RightStick);
+	App->textures->Unload(LeftStick);
+	App->textures->Unload(bumpers);
+	App->textures->Unload(RightSlider);
+	App->textures->Unload(LeftSlider);
+	App->textures->Unload(FrontGameScene);
+
+	App->textures->Unload(flecha1);
+	App->textures->Unload(flecha2);
+	App->textures->Unload(flecha3);
+	App->textures->Unload(flecha4);
+	App->textures->Unload(flecha5);
+	App->textures->Unload(flecha6);
+	App->textures->Unload(flecha7);
+	App->textures->Unload(flecha8);
+	App->textures->Unload(flecha9);
 
 	return true;
 }
@@ -398,26 +419,39 @@ update_status ModuleSceneGame::Update()
 
 void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	int x, y;
+	//int x, y;
 	
-	App->audio->PlayFx(bonus_fx);
+
+	if (bodyA != nullptr && bodyB != nullptr)
+	{
+		b2Filter filter;
+		filter.categoryBits = 0x0001;
+		filter.maskBits = 0x0001;
 
 	/*
-	if(bodyA)
-	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}
+	if (bodyA)
+		{
+			bodyA->GetPosition(x, y);
+			App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
+		}
 
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}
-
-	if (bodyA->body == App->player->player->body && bodyB->body == sensorLow->body)
-	{
-		
-	}
+		if (bodyB)
+		{
+			bodyB->GetPosition(x, y);
+			App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
+		}
 	*/
+
+		if (bodyA->body == App->player->player->body && bodyB->body == sensorLow->body)
+		{
+			filter.categoryBits = 0x0002;
+			filter.maskBits = 0x0002 | 0x0001;
+			LOG("Player Collision");
+			App->player->player->body->GetFixtureList()->SetFilterData(filter);
+
+			App->audio->PlayFx(bonus_fx);
+		}
+	}
+
+	
 }
