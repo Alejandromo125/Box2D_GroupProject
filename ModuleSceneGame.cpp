@@ -6,6 +6,9 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "p2List.h"
+#include "p2Point.h"
+#include "ModulePlayer.h"
 
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -24,6 +27,11 @@ bool ModuleSceneGame::Start()
 {
 	LOG("Loading Game assets");
 	bool ret = true;
+
+	b2Filter filter; //it is b in copy
+
+	filter.categoryBits = 1;
+	//filter.maskBits = true;
 	
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -37,9 +45,13 @@ bool ModuleSceneGame::Start()
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
-	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
+
+
+	sensorLow = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
+	sensorLow->listener = this;
+	sensorLow->body->GetFixtureList()->SetFilterData(filter);
 	
-	int mapPoints1[88] = {
+	int mapPoints1[80] = {
 	685, 897,
 	740, 895,
 	738, 163,
@@ -61,16 +73,12 @@ bool ModuleSceneGame::Start()
 	106, 651,
 	61, 666,
 	27, 707,
-	97, 714,
-	98, 828,
-	240, 878,
-	240, 897,
-	262, 906,
+	22, 868,
+	262,972,
 	262, 1137,
 	431, 1138,
-	428, 907,
-	454, 893,
-	661, 800,
+	428, 968,
+	661, 868,
 	666, 653,
 	628, 655,
 	661, 624,
@@ -86,7 +94,7 @@ bool ModuleSceneGame::Start()
 	682, 878
 	};
 
-	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 88));
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 80));
 
 	// Pivot 0, 0
 	int mapPoints2[40] = {
@@ -218,10 +226,12 @@ bool ModuleSceneGame::Start()
 		5, 18
 	};
 
-	RightStickBody = App->physics->CreateFlipper(327, 475, RightFlipper, 14);
-	LeftStickBody = App->physics->CreateFlipper(206, 455, LeftFlipper, 14);
-	LeftStickAnchor = App->physics->CreateStaticCircle(110, 457, 3);
-	RightStickAnchor = App->physics->CreateStaticCircle(265, 457, 3);
+	RightStickBody = App->physics->CreateFlipper(327, 457, RightFlipper, 14);
+	LeftStickBody = App->physics->CreateFlipper(366, 882, LeftFlipper, 14);
+	LeftStickAnchor = App->physics->CreateStaticCircle(223, 882, 3);
+	RightStickAnchor = App->physics->CreateStaticCircle(466, 882, 3);
+
+	App->physics->CreateFlipperJoints();
 
 	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
 	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
@@ -231,7 +241,19 @@ bool ModuleSceneGame::Start()
 	circles.add(App->physics->CreateCircle(652,937,18));
 	circles.getLast()->data->listener = this;
 	
-	
+	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+
+
+
+	Bouncer = App->physics->CreateBouncer(705, 700, 40, 20);
+	BouncerPivot = App->physics->CreateStaticCircle(710, 900, 3);
+
+	App->physics->CreateBouncerJoint();
 
 	return ret;
 }
@@ -249,13 +271,7 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 	
-	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
-	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
-	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
-	bumpersBodys.getLast()->data->listener = this;
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		
@@ -263,14 +279,18 @@ update_status ModuleSceneGame::Update()
 		circles.getLast()->data->listener = this;
 		
 	}
-	if (ballLaunched == false)
+	
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		//Add bouncer impulse
+		Bouncer->body->ApplyForce({ 0,100 }, { 0,0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
 		{
-			circles.getLast()->data->body->ApplyForce({ 0,-450 }, { 0, 0 }, true);
-			ballLaunched = true;
+			Bouncer->body->ApplyForce({ 0,-100 }, { 0,0 }, true);
 		}
 	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		LeftStickBody->body->ApplyForce({ 5,60 }, { 0,0 }, true);
@@ -310,7 +330,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	
 	App->audio->PlayFx(bonus_fx);
 
-	
+	/*
 	if(bodyA)
 	{
 		bodyA->GetPosition(x, y);
@@ -322,5 +342,10 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		bodyB->GetPosition(x, y);
 		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
 	}
-	
+
+	if (bodyA->body == App->player->player->body && bodyB->body == sensorLow->body)
+	{
+		
+	}
+	*/
 }

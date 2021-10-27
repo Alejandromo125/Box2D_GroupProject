@@ -6,7 +6,7 @@
 # User-specific files
 *.rsuser
 *.suo
-#*.user 
+*.user
 *.userosscache
 *.sln.docstates
 
@@ -17,7 +17,6 @@
 mono_crash.*
 
 # Build results
-[Bd]uild/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -30,7 +29,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-[Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -89,6 +87,7 @@ StyleCopReport.xml
 *.log
 *.vspscc
 *.vssscc
+*.db
 .builds
 *.pidb
 *.svclog
@@ -127,6 +126,9 @@ $tf/
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+
+# JustCode is a .NET coding add-in
+.JustCode
 
 # TeamCity is a build add-in
 _TeamCity*
@@ -346,6 +348,3 @@ healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
-
-# Ionide (cross platform F# VS Code tools) working folder
-.ionide/
