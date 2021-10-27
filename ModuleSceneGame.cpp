@@ -66,8 +66,8 @@ bool ModuleSceneGame::Start()
 	sensorLow->body->GetFixtureList()->SetFilterData(filter);
 	
 	int mapPoints1[80] = {
-	685, 897,
-	740, 895,
+	685, 990,
+	740, 990,
 	738, 163,
 	716, 87,
 	660, 41,
@@ -247,12 +247,10 @@ bool ModuleSceneGame::Start()
 
 	App->physics->CreateFlipperJoints();
 
-	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
-	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
 
 	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints8, 24));
 	
-	circles.add(App->physics->CreateCircle(652,937,18));
+	circles.add(App->physics->CreateCircle(712,814,18));
 	circles.getLast()->data->listener = this;
 	
 	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
@@ -264,8 +262,8 @@ bool ModuleSceneGame::Start()
 
 
 
-	Bouncer = App->physics->CreateBouncer(705, 700, 50, 20);
-	BouncerPivot = App->physics->CreateStaticCircle(710, 800, 3);
+	Bouncer = App->physics->CreateBouncer(715, 900, 54, 45);
+	BouncerPivot = App->physics->CreateStaticCircle(710, 950, 3);
 
 	App->physics->CreateBouncerJoint();
 
@@ -291,6 +289,9 @@ update_status ModuleSceneGame::Update()
 	delay++;
 
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
+
+	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
+	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
 
 	if (delay > 10)
 	{
@@ -321,11 +322,22 @@ update_status ModuleSceneGame::Update()
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
 		//Add bouncer impulse
-		Bouncer->body->ApplyForce({ 0,100 }, { 0,0 }, true);
+		Bouncer->body->ApplyForce({ 0,-350 }, { 0,0 }, true);
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
 		{
-			Bouncer->body->ApplyForce({ 0,-100 }, { 0,0 }, true);
+			Bouncer->body->ApplyForce({ 0,350 }, { 0,0 }, true);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		//Add bouncer impulse
+		Bouncer->body->ApplyForce({ 0,-500 }, { 0,0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+		{
+			Bouncer->body->ApplyForce({ 0,500 }, { 0,0 }, true);
 		}
 	}
 	
