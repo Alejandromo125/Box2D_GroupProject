@@ -20,6 +20,9 @@ ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(
 	flecha4 = NULL;
 	flecha5 = NULL;
 	flecha6 = NULL;
+	flecha7 = NULL;
+	flecha8 = NULL;
+	flecha9 = NULL;
 	ray_on = false;
 	sensed = false;
 	
@@ -56,6 +59,9 @@ bool ModuleSceneGame::Start()
 	flecha4 = App->textures->Load("pinball/flecha4.png");
 	flecha5 = App->textures->Load("pinball/flecha5.png");
 	flecha6 = App->textures->Load("pinball/flecha6.png");
+	flecha7 = App->textures->Load("pinball/flecha7.png");
+	flecha8 = App->textures->Load("pinball/flecha8.png");
+	flecha9 = App->textures->Load("pinball/flecha9.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -309,6 +315,10 @@ update_status ModuleSceneGame::Update()
 	if ((delay / 60) % 2 == 0) App->renderer->Blit(flecha4, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(flecha5, 0, 0, NULL, 1.0f, NULL);
 	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(flecha6, 0, 0, NULL, 1.0f, NULL);
+
+	if ((delay / 60) % 2 == 0) App->renderer->Blit(flecha7, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(flecha8, 0, 0, NULL, 1.0f, NULL);
+	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(flecha9, 0, 0, NULL, 1.0f, NULL);
 
 	
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
