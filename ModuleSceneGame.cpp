@@ -39,7 +39,7 @@ bool ModuleSceneGame::Start()
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
 	
-	int mapPoints1[88] = {
+	int mapPoints1[82] = {
 	685, 897,
 	740, 895,
 	738, 163,
@@ -61,11 +61,8 @@ bool ModuleSceneGame::Start()
 	106, 651,
 	61, 666,
 	27, 707,
-	97, 714,
-	98, 828,
-	240, 878,
-	240, 897,
-	262, 906,
+	22, 868,
+	262,972,
 	262, 1137,
 	431, 1138,
 	428, 907,
