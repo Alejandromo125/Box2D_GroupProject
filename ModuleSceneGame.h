@@ -57,5 +57,5 @@ public:
 	int delay2;
 	int delay3;
 	SDL_Texture* GameScene = nullptr;
-	SDL_Texture* FrontGame;
+	SDL_Texture* FrontGameScene = nullptr;
 };

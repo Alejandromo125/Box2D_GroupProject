@@ -52,7 +52,7 @@ bool ModuleSceneGame::Start()
 	bumpers = App->textures->Load("pinball/Obstacle-1.png");
 	RightSlider = App->textures->Load("pinball/R - Object2.png");
 	LeftSlider = App->textures->Load("pinball/L - Object2.png");
-	FrontGame = App->textures->Load("pinball/Front-Background-Pro.png");
+	FrontGameScene = App->textures->Load("pinball/Front-Background-Pro.png");
 
 	flecha1 = App->textures->Load("pinball/flecha1.png");
 	flecha2 = App->textures->Load("pinball/flecha2.png");
