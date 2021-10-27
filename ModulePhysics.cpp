@@ -199,6 +199,47 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateBouncer(int x, int y, int width, int height)
+{
+	b2BodyDef body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width * 0.5f;
+	pbody->height = height * 0.5f;
+
+	return pbody;
+}
+
+void ModulePhysics::CreateBouncerJoint()
+{
+	b2PrismaticJointDef jointDef;
+	jointDef.bodyA = App->scene_game->Bouncer->body;
+	jointDef.bodyB = App->scene_game->BouncerPivot->body;
+	jointDef.localAnchorA.Set(0.0f,0.0f);
+	jointDef.localAnchorB.Set(0.0f,-2.0f);
+	jointDef.localAxisA.Set(0, -1);
+	jointDef.collideConnected = true;
+	jointDef.enableLimit = true;
+	jointDef.lowerTranslation = -0.02f;
+	jointDef.upperTranslation = 1.0f;
+	
+	BouncerJoint = (b2PrismaticJoint*)world->CreateJoint(&jointDef);
+}
+
 PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
 {
 	b2BodyDef body;

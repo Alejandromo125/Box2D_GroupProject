@@ -45,10 +45,12 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius);
 	PhysBody* CreateStaticCircle(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateBouncer(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 	PhysBody* CreateFlipper(int x, int y, int* points, int size);
 	void CreateFlipperJoints();
+	void CreateBouncerJoint();
 	
 
 	// b2ContactListener ---
@@ -60,7 +62,7 @@ private:
 	b2World* world;
 	b2Body* body_clicked;
 	b2Body* ground;
-	b2PrismaticJoint* BumperJoint;
 	b2RevoluteJoint* l_stick;
 	b2RevoluteJoint* r_stick;
+	b2PrismaticJoint* BouncerJoint;
 };

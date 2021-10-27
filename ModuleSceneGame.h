@@ -28,6 +28,8 @@ public:
 	PhysBody* LeftSliderBody;
 	PhysBody* RightSliderBody;
 	p2List<PhysBody*> mapLimits;
+	PhysBody* Bouncer;
+	PhysBody* BouncerPivot;
 
 	PhysBody* sensorLow;
 	bool sensed;
@@ -44,5 +46,4 @@ public:
 	bool ray_on;
 
 	SDL_Texture* GameScene = nullptr;
-	bool ballLaunched = false;
 };

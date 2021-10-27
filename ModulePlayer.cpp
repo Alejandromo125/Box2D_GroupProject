@@ -35,9 +35,10 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	/*
 	player->GetPosition(playerX, playerY);
 	App->renderer->Blit(graphics, playerX, playerY, NULL, 1.0f, player->GetRotation());
-
+	*/
 
 	return UPDATE_CONTINUE;
 }

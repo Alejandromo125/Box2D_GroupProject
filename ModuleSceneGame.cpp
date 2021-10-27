@@ -249,6 +249,12 @@ bool ModuleSceneGame::Start()
 	bumpersBodys.getLast()->data->listener = this;
 
 
+
+	Bouncer = App->physics->CreateBouncer(705, 700, 40, 20);
+	BouncerPivot = App->physics->CreateStaticCircle(710, 900, 3);
+
+	App->physics->CreateBouncerJoint();
+
 	return ret;
 }
 
@@ -273,14 +279,18 @@ update_status ModuleSceneGame::Update()
 		circles.getLast()->data->listener = this;
 		
 	}
-	if (ballLaunched == false)
+	
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		//Add bouncer impulse
+		Bouncer->body->ApplyForce({ 0,100 }, { 0,0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
 		{
-			circles.getLast()->data->body->ApplyForce({ 0,-450 }, { 0, 0 }, true);
-			ballLaunched = true;
+			Bouncer->body->ApplyForce({ 0,-100 }, { 0,0 }, true);
 		}
 	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		LeftStickBody->body->ApplyForce({ 5,60 }, { 0,0 }, true);
@@ -320,7 +330,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	
 	App->audio->PlayFx(bonus_fx);
 
-	
+	/*
 	if(bodyA)
 	{
 		bodyA->GetPosition(x, y);
@@ -337,4 +347,5 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		
 	}
+	*/
 }
