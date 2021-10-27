@@ -223,6 +223,8 @@ bool ModuleSceneGame::Start()
 	LeftStickAnchor = App->physics->CreateStaticCircle(110, 457, 3);
 	RightStickAnchor = App->physics->CreateStaticCircle(265, 457, 3);
 
+	App->physics->CreateFlipperJoints();
+
 	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
 	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
 
@@ -231,7 +233,13 @@ bool ModuleSceneGame::Start()
 	circles.add(App->physics->CreateCircle(652,937,18));
 	circles.getLast()->data->listener = this;
 	
-	
+	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+
 
 	return ret;
 }
@@ -249,13 +257,7 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 	
-	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
-	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
-	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
-	bumpersBodys.getLast()->data->listener = this;
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		

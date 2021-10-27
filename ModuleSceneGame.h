@@ -29,6 +29,8 @@ public:
 	PhysBody* RightSliderBody;
 	p2List<PhysBody*> mapLimits;
 
+	
+
 	PhysBody* sensor;
 	bool sensed;
 

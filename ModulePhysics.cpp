@@ -45,6 +45,7 @@ bool ModulePhysics::Start()
 
 	b2Body* playZone = world->CreateBody(&body);
 	
+
 	return true;
 }
 
@@ -79,7 +80,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	fixture.density = 1.0f;
+	fixture.density = 0.01f;
 
 	b->CreateFixture(&fixture);
 
@@ -148,7 +149,31 @@ PhysBody * ModulePhysics::CreateFlipper(int x, int y, int* points, int size)
 
 	return pbody;
 }
+void ModulePhysics::CreateFlipperJoints()
+{
+	/*
+	//REVOLUTE JOINT CREATION
+	b2RevoluteJointDef Def;
+	Def.bodyA = App->scene_game->LeftStickBody->body;
+	Def.bodyB = App->scene_game->mapLimits.;
+	Def.collideConnected = false;
+	Def.upperAngle = 25 * DEGTORAD;
+	Def.lowerAngle = -25 * DEGTORAD;
+	Def.enableLimit = true;
+	Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
+	l_stick = (b2RevoluteJoint*)world->CreateJoint(&Def);
 
+	b2RevoluteJointDef Def2;
+	Def2.bodyA = App->scene_game->RightStickBody->body;
+	Def2.bodyB = App->scene_game->RightStickAnchor->body;
+	Def2.collideConnected = false;
+	Def2.upperAngle = 30 * DEGTORAD;
+	Def2.lowerAngle = -25 * DEGTORAD;
+	Def2.enableLimit = true;
+	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
+	r_stick = (b2RevoluteJoint*)world->CreateJoint(&Def2);
+	*/
+}
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 {
 	b2BodyDef body;
@@ -315,41 +340,6 @@ update_status ModulePhysics::PostUpdate()
 				}
 				break;
 			}
-			b2PrismaticJointDef jointDef;
-			b2Vec2 worldAxis(1.0f, 0.0f);
-			jointDef.Initialize(App->scene_game->bumpersBodys.getLast()->data->body, App->scene_game->circles.getLast()->data->body, App->scene_game->bumpersBodys.getLast()->data->body->GetWorldCenter(), worldAxis);
-			jointDef.lowerTranslation = -5.0f;
-			jointDef.upperTranslation = 2.5f;
-			jointDef.enableLimit = true;
-			jointDef.maxMotorForce = 1.0f;
-			jointDef.motorSpeed = 0.0f;
-			jointDef.enableMotor = true;
-
-			BumperJoint = (b2PrismaticJoint*)App->physics->world->CreateJoint(&jointDef);
-
-			//REVOLUTE JOINT CREATION
-			b2RevoluteJointDef Def;
-			Def.bodyA = App->scene_game->LeftStickBody->body;
-			Def.bodyB = App->scene_game->LeftStickAnchor->body;
-			Def.collideConnected = false;
-			Def.upperAngle = 25 * DEGTORAD;
-			Def.lowerAngle = -25 * DEGTORAD;
-			Def.enableLimit = true;
-			Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
-			l_stick = (b2RevoluteJoint*)world->CreateJoint(&Def);
-
-			b2RevoluteJointDef Def2;
-			Def2.bodyA = App->scene_game->RightStickBody->body;
-			Def2.bodyB = App->scene_game->RightStickAnchor->body;
-			Def2.collideConnected = false;
-			Def2.upperAngle = 30 * DEGTORAD;
-			Def2.lowerAngle = -25 * DEGTORAD;
-			Def2.enableLimit = true;
-			Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
-			r_stick = (b2RevoluteJoint*)world->CreateJoint(&Def2);
-
-
-
 
 		}
 			
