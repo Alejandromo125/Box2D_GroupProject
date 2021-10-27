@@ -1,2 +1,12 @@
-﻿  ModuleSceneGame.cpp
-  SDL Game.vcxproj -> C:\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe
+﻿  ModulePhysics.cpp
+C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModulePhysics.cpp(128,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModulePhysics.cpp(171,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModulePhysics.cpp(172,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModulePhysics.cpp(215,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModulePhysics.cpp(423,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModulePhysics.cpp(424,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModulePhysics.cpp(430,27): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
+  ModulePlayer.cpp
+  ModuleWindow.cpp
+  Generando código...
+  SDL Game.vcxproj -> C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe

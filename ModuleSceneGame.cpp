@@ -7,11 +7,13 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 
+
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	circle = NULL;
 	ray_on = false;
 	sensed = false;
+	
 }
 
 ModuleSceneGame::~ModuleSceneGame()
@@ -196,12 +198,40 @@ bool ModuleSceneGame::Start()
 	339, 400
 	};
 
+	//HAVE TO REPOSITION FLIPPERS 
+	int RightFlipper[14] = {
+		72, 5,
+		65, 0,
+		2, 6,
+		0, 12,
+		4, 16,
+		64, 18,
+		72, 14
+	};
+	int LeftFlipper[14] = {
+		0, 10,
+		2, 3,
+		10, 1,
+		69, 6,
+		72, 11,
+		68, 17,
+		5, 18
+	};
+
+	RightStickBody = App->physics->CreateFlipper(327, 475, RightFlipper, 14);
+	LeftStickBody = App->physics->CreateFlipper(206, 455, LeftFlipper, 14);
+	LeftStickAnchor = App->physics->CreateStaticCircle(110, 457, 3);
+	RightStickAnchor = App->physics->CreateStaticCircle(265, 457, 3);
+
+	App->renderer->Blit(LeftStick, LeftStickBody->body->GetPosition().x, LeftStickBody->body->GetPosition().y, NULL, 0.0f);
+	App->renderer->Blit(LeftStick, RightStickBody->body->GetPosition().x, RightStickBody->body->GetPosition().y, NULL, 0.0f);
+
 	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints8, 24));
 	
 	circles.add(App->physics->CreateCircle(652,937,18));
 	circles.getLast()->data->listener = this;
 	
-	bumpersBodys.add(App->physics->CreateBumper(452, 286, 26));
+	
 
 	return ret;
 }
@@ -219,6 +249,12 @@ update_status ModuleSceneGame::Update()
 {
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
 	
+	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
+	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
+	bumpersBodys.getLast()->data->listener = this;
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
@@ -227,7 +263,23 @@ update_status ModuleSceneGame::Update()
 		circles.getLast()->data->listener = this;
 		
 	}
-	
+	if (ballLaunched == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			circles.getLast()->data->body->ApplyForce({ 0,-450 }, { 0, 0 }, true);
+			ballLaunched = true;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		LeftStickBody->body->ApplyForce({ 5,60 }, { 0,0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+		{
+			LeftStickBody->body->ApplyForce({ -5,-60 }, { 0,0 }, true);
+		}
+	}
 	// Prepare for raycast ------------------------------------------------------
 	
 	iPoint mouse;
