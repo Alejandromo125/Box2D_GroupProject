@@ -39,7 +39,7 @@ bool ModuleSceneGame::Start()
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
 	
-	int mapPoints1[82] = {
+	int mapPoints1[80] = {
 	685, 897,
 	740, 895,
 	738, 163,
@@ -65,9 +65,8 @@ bool ModuleSceneGame::Start()
 	262,972,
 	262, 1137,
 	431, 1138,
-	428, 907,
-	454, 893,
-	661, 800,
+	428, 968,
+	661, 868,
 	666, 653,
 	628, 655,
 	661, 624,
@@ -83,7 +82,7 @@ bool ModuleSceneGame::Start()
 	682, 878
 	};
 
-	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 88));
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints1, 80));
 
 	// Pivot 0, 0
 	int mapPoints2[40] = {
@@ -215,10 +214,10 @@ bool ModuleSceneGame::Start()
 		5, 18
 	};
 
-	RightStickBody = App->physics->CreateFlipper(327, 475, RightFlipper, 14);
-	LeftStickBody = App->physics->CreateFlipper(206, 455, LeftFlipper, 14);
-	LeftStickAnchor = App->physics->CreateStaticCircle(110, 457, 3);
-	RightStickAnchor = App->physics->CreateStaticCircle(265, 457, 3);
+	RightStickBody = App->physics->CreateFlipper(327, 457, RightFlipper, 14);
+	LeftStickBody = App->physics->CreateFlipper(366, 882, LeftFlipper, 14);
+	LeftStickAnchor = App->physics->CreateStaticCircle(223, 882, 3);
+	RightStickAnchor = App->physics->CreateStaticCircle(466, 882, 3);
 
 	App->physics->CreateFlipperJoints();
 

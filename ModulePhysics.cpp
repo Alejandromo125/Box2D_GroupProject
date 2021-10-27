@@ -151,11 +151,11 @@ PhysBody * ModulePhysics::CreateFlipper(int x, int y, int* points, int size)
 }
 void ModulePhysics::CreateFlipperJoints()
 {
-	/*
+	
 	//REVOLUTE JOINT CREATION
 	b2RevoluteJointDef Def;
 	Def.bodyA = App->scene_game->LeftStickBody->body;
-	Def.bodyB = App->scene_game->mapLimits.;
+	Def.bodyB = App->scene_game->LeftStickAnchor->body;
 	Def.collideConnected = false;
 	Def.upperAngle = 25 * DEGTORAD;
 	Def.lowerAngle = -25 * DEGTORAD;
@@ -172,7 +172,7 @@ void ModulePhysics::CreateFlipperJoints()
 	Def2.enableLimit = true;
 	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
 	r_stick = (b2RevoluteJoint*)world->CreateJoint(&Def2);
-	*/
+	
 }
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 {
