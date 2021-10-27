@@ -64,5 +64,5 @@ private:
 	b2Body* ground;
 	b2RevoluteJoint* l_stick;
 	b2RevoluteJoint* r_stick;
-	b2PrismaticJoint* BouncerJoint;
+	b2DistanceJoint* BouncerJoint;
 };

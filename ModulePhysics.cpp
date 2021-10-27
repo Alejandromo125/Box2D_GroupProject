@@ -226,18 +226,16 @@ PhysBody* ModulePhysics::CreateBouncer(int x, int y, int width, int height)
 
 void ModulePhysics::CreateBouncerJoint()
 {
-	b2PrismaticJointDef jointDef;
+	b2DistanceJointDef jointDef;
 	jointDef.bodyA = App->scene_game->Bouncer->body;
 	jointDef.bodyB = App->scene_game->BouncerPivot->body;
-	jointDef.localAnchorA.Set(0.0f,0.0f);
-	jointDef.localAnchorB.Set(0.0f,-2.0f);
-	jointDef.localAxisA.Set(0, -1);
+	jointDef.localAnchorA.Set(PIXEL_TO_METERS(0.0f),PIXEL_TO_METERS(0.0f));
+	jointDef.localAnchorB.Set(PIXEL_TO_METERS(0.0f), PIXEL_TO_METERS (0.0f));
 	jointDef.collideConnected = true;
-	jointDef.enableLimit = true;
-	jointDef.lowerTranslation = -0.02f;
-	jointDef.upperTranslation = 1.0f;
+	jointDef.frequencyHz = 4.0f;
+	jointDef.dampingRatio = 0.5f;
 	
-	BouncerJoint = (b2PrismaticJoint*)world->CreateJoint(&jointDef);
+	BouncerJoint = (b2DistanceJoint*)world->CreateJoint(&jointDef);
 }
 
 PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)

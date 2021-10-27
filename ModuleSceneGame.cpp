@@ -264,8 +264,8 @@ bool ModuleSceneGame::Start()
 
 
 
-	Bouncer = App->physics->CreateBouncer(705, 700, 40, 20);
-	BouncerPivot = App->physics->CreateStaticCircle(710, 900, 3);
+	Bouncer = App->physics->CreateBouncer(705, 700, 50, 20);
+	BouncerPivot = App->physics->CreateStaticCircle(710, 800, 3);
 
 	App->physics->CreateBouncerJoint();
 
