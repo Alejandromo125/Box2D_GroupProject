@@ -29,9 +29,7 @@ public:
 	PhysBody* RightSliderBody;
 	p2List<PhysBody*> mapLimits;
 
-	
-
-	PhysBody* sensor;
+	PhysBody* sensorLow;
 	bool sensed;
 
 	SDL_Texture* circle;

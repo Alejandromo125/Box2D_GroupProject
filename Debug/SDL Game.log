@@ -1,6 +1,6 @@
 ﻿  ModuleSceneGame.cpp
-C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(224,105): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
-C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(224,67): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
-C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(225,107): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
-C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(225,68): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
-  SDL Game.vcxproj -> C:\Users\Alejandromo3\Documents\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe
+C:\Users\alvaromc1\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(236,105): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
+C:\Users\alvaromc1\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(236,67): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
+C:\Users\alvaromc1\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(237,107): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
+C:\Users\alvaromc1\Documents\GitHub\Box2D_GroupProject\ModuleSceneGame.cpp(237,68): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
+  SDL Game.vcxproj -> C:\Users\alvaromc1\Documents\GitHub\Box2D_GroupProject\Debug\2D Physics - class 4.exe
