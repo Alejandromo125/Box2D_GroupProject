@@ -49,6 +49,14 @@ public:
 	SDL_Texture* flecha7 = nullptr;
 	SDL_Texture* flecha8 = nullptr;
 	SDL_Texture* flecha9 = nullptr;
+	SDL_Texture* twoArrows1 = nullptr;
+	SDL_Texture* twoArrows2 = nullptr;
+	SDL_Texture* gge1 = nullptr;
+	SDL_Texture* gge2 = nullptr;
+	SDL_Texture* gge3 = nullptr;
+	SDL_Texture* digit1 = nullptr;
+	SDL_Texture* digit2 = nullptr;
+	SDL_Texture* digit3 = nullptr;
 
 	uint bonus_fx;
 	p2Point<int> ray;
