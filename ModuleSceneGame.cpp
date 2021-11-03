@@ -31,6 +31,13 @@ ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(
 	digit1 = NULL;
 	digit2 = NULL;
 	digit3 = NULL;
+	yellowArrows = NULL;
+	blueArrows = NULL;
+	numberTwo = NULL;
+	numberThree = NULL;
+	letterG = NULL;
+	lettersIN = NULL;
+	letterR = NULL;
 	ray_on = false;
 	sensed = false;
 	
@@ -79,6 +86,13 @@ bool ModuleSceneGame::Start()
 	digit1 = App->textures->Load("pinball/digit1.png");
 	digit2 = App->textures->Load("pinball/digit2.png");
 	digit3 = App->textures->Load("pinball/digit3.png");
+	yellowArrows = App->textures->Load("pinball/yellowArrows.png");
+	blueArrows = App->textures->Load("pinball/blueArrows.png");
+	numberTwo = App->textures->Load("pinball/numberTwo.png");
+	numberThree = App->textures->Load("pinball/numberThree.png");
+	letterG = App->textures->Load("pinball/letterG.png");
+	lettersIN = App->textures->Load("pinball/lettersIN.png");
+	letterR = App->textures->Load("pinball/letterR.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -343,6 +357,13 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(digit1);
 	App->textures->Unload(digit2);
 	App->textures->Unload(digit3);
+	App->textures->Unload(yellowArrows);
+	App->textures->Unload(blueArrows);
+	App->textures->Unload(numberTwo);
+	App->textures->Unload(numberThree);
+	App->textures->Unload(letterG);
+	App->textures->Unload(lettersIN);
+	App->textures->Unload(letterR);
 
 	return true;
 }
@@ -389,6 +410,16 @@ update_status ModuleSceneGame::Update()
 	if ((delay3 / 120) % 2 == 0) App->renderer->Blit(digit1, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 120) % 2 == 0) App->renderer->Blit(digit2, 0, 0, NULL, 1.0f, NULL);
 	if ((delay / 120) % 2 == 0) App->renderer->Blit(digit3, 0, 0, NULL, 1.0f, NULL);
+
+	if ((delay / 60) % 2 == 0) App->renderer->Blit(blueArrows, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 120) % 2 == 0) App->renderer->Blit(yellowArrows, 0, 0, NULL, 1.0f, NULL);
+
+	if ((delay / 60) % 2 == 0) App->renderer->Blit(numberTwo, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(numberThree, 0, 0, NULL, 1.0f, NULL);
+
+	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(letterG, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(lettersIN, 0, 0, NULL, 1.0f, NULL);
+	if ((delay / 60) % 2 == 0) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
 
 	
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)

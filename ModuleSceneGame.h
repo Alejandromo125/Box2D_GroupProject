@@ -57,6 +57,13 @@ public:
 	SDL_Texture* digit1 = nullptr;
 	SDL_Texture* digit2 = nullptr;
 	SDL_Texture* digit3 = nullptr;
+	SDL_Texture* yellowArrows = nullptr;
+	SDL_Texture* blueArrows = nullptr;
+	SDL_Texture* numberTwo = nullptr;
+	SDL_Texture* numberThree = nullptr;
+	SDL_Texture* letterG = nullptr;
+	SDL_Texture* lettersIN = nullptr;
+	SDL_Texture* letterR = nullptr;
 
 	uint bonus_fx;
 	p2Point<int> ray;
