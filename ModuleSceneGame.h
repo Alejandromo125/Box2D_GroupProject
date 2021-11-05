@@ -64,6 +64,8 @@ public:
 	SDL_Texture* letterG = nullptr;
 	SDL_Texture* lettersIN = nullptr;
 	SDL_Texture* letterR = nullptr;
+	SDL_Texture* timeUp = nullptr;
+	SDL_Texture* contrast = nullptr;
 
 	uint bonus_fx;
 	p2Point<int> ray;
@@ -76,4 +78,6 @@ public:
 
 	int gameplayTimer;
 
+	char timeText[10] = { "\0" };
+	int timeFont = -1;
 };

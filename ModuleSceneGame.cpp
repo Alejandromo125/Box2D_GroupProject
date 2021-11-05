@@ -9,7 +9,8 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "ModulePlayer.h"
-
+#include "ModuleFonts.h"
+#include "ModuleFadeToBlack.h"
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -62,12 +63,12 @@ bool ModuleSceneGame::Start()
 
 	GameScene = App->textures->Load("pinball/sceneGame.png");
 	circle = App->textures->Load("pinball/sonic_ball.png");
-	RightStick = App->textures->Load("pinball/R - Stick x52.png");
-	LeftStick = App->textures->Load("pinball/L - Stick x52.png");
+	RightStick = App->textures->Load("pinball/R_Stick.png");
+	LeftStick = App->textures->Load("pinball/L_Stick.png");
 	bumpers = App->textures->Load("pinball/Obstacle-1.png");
-	RightSlider = App->textures->Load("pinball/R - Object2.png");
-	LeftSlider = App->textures->Load("pinball/L - Object2.png");
-	FrontGameScene = App->textures->Load("pinball/Front-Background.png");
+	RightSlider = App->textures->Load("pinball/R_Object2.png");
+	LeftSlider = App->textures->Load("pinball/L_Object2.png");
+	FrontGameScene = App->textures->Load("pinball/Front_Background.png");
 
 	flecha1 = App->textures->Load("pinball/flecha1.png");
 	flecha2 = App->textures->Load("pinball/flecha2.png");
@@ -93,9 +94,15 @@ bool ModuleSceneGame::Start()
 	letterG = App->textures->Load("pinball/letterG.png");
 	lettersIN = App->textures->Load("pinball/lettersIN.png");
 	letterR = App->textures->Load("pinball/letterR.png");
+	timeUp = App->textures->Load("pinball/time_up_L.png");
+	contrast = App->textures->Load("pinball/dark_contrast.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
+	App->audio->PlayMusic("pinball/capitolio2.ogg", 0.0f);
+
+	char lookupTable[] = { "0123456789" };
+	timeFont = App->fonts->Load("pinball/numbers.png", lookupTable, 1);
 
 	filter.categoryBits = 0x0001;
 	filter.maskBits = 0x0001;
@@ -128,8 +135,8 @@ bool ModuleSceneGame::Start()
 	27, 707,
 	22, 868,
 	262,972,
-	262, 1137,
-	431, 1138,
+	262, 9137,
+	431, 9138,
 	428, 968,
 	661, 868,
 	666, 653,
@@ -316,10 +323,12 @@ bool ModuleSceneGame::Start()
 	b.maskBits = DISABLE;
 	*/
 
-	gameplayTimer = 220;
+	gameplayTimer = 218;
 
 	App->player->createball = true;
 	//App->player->player->body.getLast()->data->listener = this; <-- Al parecer no
+
+	App->player->Enable();
 
 	delay = 0;
 	delay2 = 0;
@@ -502,7 +511,23 @@ update_status ModuleSceneGame::Update()
 	}
 
 	App->renderer->Blit(FrontGameScene, 0, 0, NULL, 1.0f, NULL);
-	
+
+	// Timer
+	//App->fonts->BlitText(180, 10, timeFont, timeText);
+	sprintf_s(timeText, 10, "%3d", gameplayTimer);
+	App->fonts->BlitText(10, 10, timeFont, timeText);
+
+	if (gameplayTimer < 0)
+	{
+		App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
+		App->renderer->Blit(timeUp, (SCREEN_WIDTH / 2) - (560 / 2), (SCREEN_HEIGHT / 2) - (260 / 2), NULL, 1.0f, NULL);
+		
+		if (gameplayTimer < -3)
+		{
+			Mix_PauseMusic();
+			App->fade->FadeToBlack((Module*)App->scene_game, (Module*)App->scene_intro, 90);
+		}
+	}
 
 	return UPDATE_CONTINUE;
 }
