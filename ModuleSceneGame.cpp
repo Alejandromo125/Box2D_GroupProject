@@ -316,6 +316,8 @@ bool ModuleSceneGame::Start()
 	b.maskBits = DISABLE;
 	*/
 
+	gameplayTimer = 220;
+
 	App->player->createball = true;
 	//App->player->player->body.getLast()->data->listener = this; <-- Al parecer no
 
@@ -371,7 +373,16 @@ bool ModuleSceneGame::CleanUp()
 // Update: draw background
 update_status ModuleSceneGame::Update()
 {
-	
+	if ((delay % 60) == 0)
+	{
+		/*
+		if (timeCounter <= 0)
+		{
+			timeCounter == 0;
+		}
+		*/
+		gameplayTimer--;
+	}
 	delay++;
 
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
@@ -523,19 +534,22 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		if (bodyA->body == App->player->player->body && bodyB->body == sensorLow->body)
 		{
-			filter.categoryBits = 0x0002;
-			filter.maskBits = 0x0002 | 0x0001;
+			if (gameplayTimer > 0)
+			{
+				filter.categoryBits = 0x0002;
+				filter.maskBits = 0x0002 | 0x0001;
 
-			b2Vec2 position;
-			position.x = 688;
-			position.y = 820;
+				b2Vec2 position;
+				position.x = 688;
+				position.y = 820;
 
-			LOG("Player Collision");
-			App->player->player->body->GetFixtureList()->SetFilterData(filter);
-			//App->player->player->body->DestroyFixture();
-			App->player->createball = true;
+				LOG("Player Collision");
+				App->player->player->body->GetFixtureList()->SetFilterData(filter);
+				//App->player->player->body->DestroyFixture();
+				App->player->createball = true;
 
-			App->audio->PlayFx(bonus_fx);
+				App->audio->PlayFx(bonus_fx);
+			}
 		}
 	}
 
