@@ -10,6 +10,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleSceneGame.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleFonts.h"
 
 #include "Application.h"
 
@@ -25,6 +26,7 @@ Application::Application()
 	scene_game = new ModuleSceneGame(this,false);
 	physics = new ModulePhysics(this, true);
 	fade = new ModuleFadeToBlack(this, true);
+	fonts = new ModuleFonts(this, true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -45,6 +47,10 @@ Application::Application()
 	
 	// Player
 	AddModule(player);
+
+	// Fonts & UI
+	AddModule(fonts);
+
 }
 
 Application::~Application()
