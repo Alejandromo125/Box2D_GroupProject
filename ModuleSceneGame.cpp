@@ -454,7 +454,15 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(letterG);
 	App->textures->Unload(lettersIN);
 	App->textures->Unload(letterR);
-
+	App->textures->Unload(circle2);
+	App->textures->Unload(egg);
+	App->textures->Unload(ring);
+	App->textures->Unload(eggEffect);
+	App->textures->Unload(ringEffect);
+	App->textures->Unload(sceneUI);
+	App->textures->Unload(multiBall);
+	App->textures->Unload(contrast);
+	App->textures->Unload(timeUp);
 
 	App->scene_game->RightStickBody->body->DestroyFixture(App->scene_game->RightStickBody->body->GetFixtureList());
 	App->scene_game->LeftStickBody->body->DestroyFixture(App->scene_game->LeftStickBody->body->GetFixtureList());
