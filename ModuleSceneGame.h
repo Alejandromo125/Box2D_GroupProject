@@ -121,6 +121,9 @@ public:
 	int bonusBall5PositionX = 0, bonusBall5PositionY = 0;
 	int bonusBall6PositionX = 0, bonusBall6PositionY = 0;
 
+	int LeftStickPosX = 0, LeftStickPosY = 0;
+	int RightStickPosX = 0, RightStickPosY = 0;
+
 	bool multiBallActive = false;
 	int multiBallTimer;
 

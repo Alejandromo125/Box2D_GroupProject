@@ -371,7 +371,8 @@ bool ModuleSceneGame::Start()
 	bumpersBodys.getLast()->data->listener = this;
 	bumpersBodys.add(App->physics->CreateStaticCircle(583, 228, 26));
 	bumpersBodys.getLast()->data->listener = this;
-
+	bumpersBodys.add(App->physics->CreateStaticCircle(628, 210, 16));
+	bumpersBodys.getLast()->data->listener = this;
 
 
 	Bouncer = App->physics->CreateBouncer(715, 900, 54, 45);
@@ -577,8 +578,8 @@ update_status ModuleSceneGame::Update()
 	if ((delay2 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(lettersIN, 0, 0, NULL, 1.0f, NULL);
 	if ((delay / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
 
-	App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
-	App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
+	//App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
+	//App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
 
 
 	//Bonus balls
@@ -600,7 +601,12 @@ update_status ModuleSceneGame::Update()
 	bonusBall6->GetPosition(bonusBall6PositionX, bonusBall6PositionY);
 	App->renderer->Blit(circle2, bonusBall6PositionX, bonusBall6PositionY, NULL, 1.0f, bonusBall6->GetRotation());
 
-	
+	RightStickBody->GetPosition(RightStickPosX, RightStickPosY);
+	App->renderer->Blit(RightStick, RightStickPosX - 35, RightStickPosY - 56, NULL, 1.0f, RightStickBody->GetRotation() + 20, 30, 50);
+
+	LeftStickBody->GetPosition(LeftStickPosX, LeftStickPosY);
+	App->renderer->Blit(LeftStick, LeftStickPosX - 10, LeftStickPosY - 30, NULL, 1.0f, LeftStickBody->GetRotation() - 20, 10, 20);
+
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
