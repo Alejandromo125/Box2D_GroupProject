@@ -63,6 +63,7 @@ bool ModuleSceneGame::Start()
 
 	GameScene = App->textures->Load("pinball/sceneGame.png");
 	circle = App->textures->Load("pinball/sonic_ball.png");
+	circle2 = App->textures->Load("pinball/sonic_ball2.png");
 	RightStick = App->textures->Load("pinball/R_Stick.png");
 	LeftStick = App->textures->Load("pinball/L_Stick.png");
 	bumpers = App->textures->Load("pinball/Obstacle-1.png");
@@ -99,6 +100,8 @@ bool ModuleSceneGame::Start()
 	multiBall = App->textures->Load("pinball/multiBall.png");
 	egg = App->textures->Load("pinball/egg.png");
 	ring = App->textures->Load("pinball/ring.png");
+	eggEffect = App->textures->Load("pinball/eggEffect.png");
+	ringEffect = App->textures->Load("pinball/ringEffect.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -157,6 +160,14 @@ bool ModuleSceneGame::Start()
 	multiBallSensor = App->physics->CreateRectangleSensor(640 + 20 / 2, 510 + 130 / 2, 20, 130);
 	multiBallSensor->listener = this;
 	multiBallSensor->body->GetFixtureList()->SetFilterData(filter);
+
+	eggSensor = App->physics->CreateRectangleSensor(624 + 46 / 2, 335 + 55 / 2, 46, 55);
+	eggSensor->listener = this;
+	eggSensor->body->GetFixtureList()->SetFilterData(filter);
+
+	ringSensor = App->physics->CreateRectangleSensor(40 + 60 / 2, 315 + 10 / 2, 60, 10);
+	ringSensor->listener = this;
+	ringSensor->body->GetFixtureList()->SetFilterData(filter);
 
 	int mapPoints1[80] = {
 	685, 990,
@@ -387,7 +398,10 @@ bool ModuleSceneGame::Start()
 	App->player->Enable();
 	
 	App->slowMotion = false;
+
 	multiBallTimer = 0;
+	eggTimer = 0;
+	ringTimer = 0;
 
 	delay = 0;
 	delay2 = 0;
@@ -469,6 +483,10 @@ bool ModuleSceneGame::CleanUp()
 	App->scene_game->bonusBall5->body->DestroyFixture(App->scene_game->bonusBall5->body->GetFixtureList());
 	App->scene_game->bonusBall6->body->DestroyFixture(App->scene_game->bonusBall6->body->GetFixtureList());
 
+	App->scene_game->multiBallSensor->body->DestroyFixture(App->scene_game->multiBallSensor->body->GetFixtureList());
+	App->scene_game->eggSensor->body->DestroyFixture(App->scene_game->eggSensor->body->GetFixtureList());
+	App->scene_game->ringSensor->body->DestroyFixture(App->scene_game->ringSensor->body->GetFixtureList());
+
 	//Esto para los circles y los bumpers también
 	p2List_item<PhysBody*>* chains;
 	int i = 0;
@@ -516,20 +534,20 @@ update_status ModuleSceneGame::Update()
 	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(flecha2, 0, 0, NULL, 1.0f, NULL);
 	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(flecha3, 0, 0, NULL, 1.0f, NULL);
 
-	if ((delay / 60) % 2 == 0) App->renderer->Blit(flecha4, 0, 0, NULL, 1.0f, NULL);
-	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(flecha5, 0, 0, NULL, 1.0f, NULL);
-	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(flecha6, 0, 0, NULL, 1.0f, NULL);
+	if ((delay / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(flecha4, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(flecha5, 0, 0, NULL, 1.0f, NULL);
+	if ((delay3 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(flecha6, 0, 0, NULL, 1.0f, NULL);
 
 	if ((delay / 60) % 2 == 0) App->renderer->Blit(flecha7, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(flecha8, 0, 0, NULL, 1.0f, NULL);
 	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(flecha9, 0, 0, NULL, 1.0f, NULL);
 
-	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(gge1, 0, 0, NULL, 1.0f, NULL);
-	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(gge2, 0, 0, NULL, 1.0f, NULL);
-	if ((delay / 60) % 2 == 0) App->renderer->Blit(gge3, 0, 0, NULL, 1.0f, NULL);
+	if ((delay3 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(gge1, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(gge2, 0, 0, NULL, 1.0f, NULL);
+	if ((delay / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(gge3, 0, 0, NULL, 1.0f, NULL);
 
-	if ((delay / 60) % 2 == 0 && multiBallActive == false) App->renderer->Blit(twoArrows1, 0, 0, NULL, 1.0f, NULL);
-	if ((delay2 / 60) % 2 == 0 && multiBallActive == false) App->renderer->Blit(twoArrows2, 0, 0, NULL, 1.0f, NULL);
+	if ((delay / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(twoArrows1, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(twoArrows2, 0, 0, NULL, 1.0f, NULL);
 
 	if ((delay3 / 120) % 2 == 0) App->renderer->Blit(digit1, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 120) % 2 == 0) App->renderer->Blit(digit2, 0, 0, NULL, 1.0f, NULL);
@@ -541,9 +559,9 @@ update_status ModuleSceneGame::Update()
 	if ((delay / 60) % 2 == 0) App->renderer->Blit(numberTwo, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(numberThree, 0, 0, NULL, 1.0f, NULL);
 
-	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(letterG, 0, 0, NULL, 1.0f, NULL);
-	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(lettersIN, 0, 0, NULL, 1.0f, NULL);
-	if ((delay / 60) % 2 == 0) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
+	if ((delay3 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(letterG, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(lettersIN, 0, 0, NULL, 1.0f, NULL);
+	if ((delay / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
 
 	App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
 	App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
@@ -551,22 +569,22 @@ update_status ModuleSceneGame::Update()
 
 	//Bonus balls
 	bonusBall1->GetPosition(bonusBall1PositionX, bonusBall1PositionY);
-	App->renderer->Blit(circle, bonusBall1PositionX, bonusBall1PositionY, NULL, 1.0f, bonusBall1->GetRotation());
+	App->renderer->Blit(circle2, bonusBall1PositionX, bonusBall1PositionY, NULL, 1.0f, bonusBall1->GetRotation());
 
 	bonusBall2->GetPosition(bonusBall2PositionX, bonusBall2PositionY);
-	App->renderer->Blit(circle, bonusBall2PositionX, bonusBall2PositionY, NULL, 1.0f, bonusBall2->GetRotation());
+	App->renderer->Blit(circle2, bonusBall2PositionX, bonusBall2PositionY, NULL, 1.0f, bonusBall2->GetRotation());
 
 	bonusBall3->GetPosition(bonusBall3PositionX, bonusBall3PositionY);
-	App->renderer->Blit(circle, bonusBall3PositionX, bonusBall3PositionY, NULL, 1.0f, bonusBall3->GetRotation());
+	App->renderer->Blit(circle2, bonusBall3PositionX, bonusBall3PositionY, NULL, 1.0f, bonusBall3->GetRotation());
 
 	bonusBall4->GetPosition(bonusBall4PositionX, bonusBall4PositionY);
-	App->renderer->Blit(circle, bonusBall4PositionX, bonusBall4PositionY, NULL, 1.0f, bonusBall4->GetRotation());
+	App->renderer->Blit(circle2, bonusBall4PositionX, bonusBall4PositionY, NULL, 1.0f, bonusBall4->GetRotation());
 
 	bonusBall5->GetPosition(bonusBall5PositionX, bonusBall5PositionY);
-	App->renderer->Blit(circle, bonusBall5PositionX, bonusBall5PositionY, NULL, 1.0f, bonusBall5->GetRotation());
+	App->renderer->Blit(circle2, bonusBall5PositionX, bonusBall5PositionY, NULL, 1.0f, bonusBall5->GetRotation());
 
 	bonusBall6->GetPosition(bonusBall6PositionX, bonusBall6PositionY);
-	App->renderer->Blit(circle, bonusBall6PositionX, bonusBall6PositionY, NULL, 1.0f, bonusBall6->GetRotation());
+	App->renderer->Blit(circle2, bonusBall6PositionX, bonusBall6PositionY, NULL, 1.0f, bonusBall6->GetRotation());
 
 	
 	/*
@@ -592,7 +610,12 @@ update_status ModuleSceneGame::Update()
 	}
 	*/
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	if ((delay % 120) == 0 && eggActive == true)
+	{
+		Bouncer->body->ApplyForce({ 0,-2000 }, { 0,0 }, true);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && eggActive == false)
 	{
 		//Add bouncer impulse
 		Bouncer->body->ApplyForce({ 0,-2000 }, { 0,0 }, true);
@@ -663,10 +686,54 @@ update_status ModuleSceneGame::Update()
 			bonusBall6 = App->physics->CreateCircle(330, 560, 16);
 		}
 
-		if (multiBallTimer > 900)
+		if (multiBallTimer > 900 || gameplayTimer <= 90)
 		{
 			multiBallTimer = 0;
 			multiBallActive = false;
+		}
+	}
+
+	if (eggActive == true)
+	{
+		eggTimer++;
+
+		if (eggTimer >= 1 && eggTimer <= 90)
+		{
+			App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
+			App->renderer->Blit(egg, 190, 390, NULL, 1.0f, NULL);
+		}
+
+		App->renderer->Blit(eggEffect, 0, 0, NULL, 1.0f, NULL);
+
+		scoreChanger = -1;
+
+		if (eggTimer > 900 || gameplayTimer <= 90)
+		{
+			scoreChanger = 1;
+			eggTimer = 0;
+			eggActive = false;
+		}
+	}
+
+	if (ringActive == true)
+	{
+		ringTimer++;
+
+		if (ringTimer >= 1 && ringTimer <= 90)
+		{
+			App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
+			App->renderer->Blit(ring, 190, 390, NULL, 1.0f, NULL);
+		}
+
+		App->renderer->Blit(ringEffect, 0, 0, NULL, 1.0f, NULL);
+
+		scoreChanger = 2;
+
+		if (ringTimer > 900 || gameplayTimer <= 90)
+		{
+			scoreChanger = 1;
+			ringTimer = 0;
+			ringActive = false;
 		}
 	}
 
@@ -732,7 +799,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				position.x = 688;
 				position.y = 820;
 
-				score = score - 5;
+				score = score - 50;
 
 				LOG("Player Collision");
 				App->player->player->body->GetFixtureList()->SetFilterData(filter);
@@ -750,14 +817,15 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				position.x = 688;
 				position.y = 820;
 
-				score = score + 150;
+				score = score + 150 * scoreChanger;
 
 				LOG("Player Collision");
 				App->player->player->body->GetFixtureList()->SetFilterData(filter);
 				//App->player->player->body->DestroyFixture(App->player->player->body->GetFixtureList());
 				App->player->createball = true;
 
-				App->audio->PlayFx(bonus_fx);
+				if (eggActive == false) App->audio->PlayFx(bonus_fx);
+				if (eggActive == true) App->audio->PlayFx(bonus_fx);
 			}
 		}
 		
@@ -767,11 +835,12 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			if (gameplayTimer > 0)
 			{
 
-				score = score + 3;
+				score = score + 3 * scoreChanger;
 
 				LOG("Player Collision");
 
-				App->audio->PlayFx(bonus_fx);
+				if (eggActive == false) App->audio->PlayFx(bonus_fx);
+				if (eggActive == true) App->audio->PlayFx(bonus_fx);
 			}
 		}
 
@@ -780,11 +849,12 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			if (gameplayTimer > 0)
 			{
 
-				score = score + 5;
+				score = score + 5 * scoreChanger;
 
 				LOG("Player Collision");
 
-				App->audio->PlayFx(bonus_fx);
+				if (eggActive == false) App->audio->PlayFx(bonus_fx);
+				if (eggActive == true) App->audio->PlayFx(bonus_fx);
 			}
 		}
 
@@ -796,11 +866,12 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			if (gameplayTimer > 0)
 			{
 
-				score = score + 3;
+				score = score + 3 * scoreChanger;
 
 				LOG("Player Collision");
 
-				App->audio->PlayFx(bonus_fx);
+				if (eggActive == false) App->audio->PlayFx(bonus_fx);
+				if (eggActive == true) App->audio->PlayFx(bonus_fx);
 			}
 		}
 
@@ -811,20 +882,47 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			if (gameplayTimer > 0)
 			{
 
-				score = score + 5;
+				score = score + 5 * scoreChanger;
 
 				LOG("Player Collision");
 
-				App->audio->PlayFx(bonus_fx);
+				if (eggActive == false) App->audio->PlayFx(bonus_fx);
+				if (eggActive == true) App->audio->PlayFx(bonus_fx);
 			}
 		}
 	}
 
-	if (bodyA->body == App->player->player->body && bodyB->body == App->scene_game->multiBallSensor->body && multiBallActive == false)
+	if (bodyA->body == App->player->player->body && bodyB->body == App->scene_game->multiBallSensor->body && multiBallActive == false && ringActive == false && eggActive == false)
 	{
 		if (gameplayTimer > 0)
 		{
 			multiBallActive = true;
+
+			LOG("Player Collision");
+			App->player->createball = true;
+
+			App->audio->PlayFx(bonus_fx);
+		}
+	}
+
+	if (bodyA->body == App->player->player->body && bodyB->body == App->scene_game->eggSensor->body && eggActive == false && ringActive == false)
+	{
+		if (gameplayTimer > 0)
+		{
+			eggActive = true;
+
+			LOG("Player Collision");
+			App->player->createball = true;
+
+			//App->audio->PlayFx(bonus_fx);
+		}
+	}
+
+	if (bodyA->body == App->player->player->body && bodyB->body == App->scene_game->ringSensor->body && ringActive == false && eggActive == false)
+	{
+		if (gameplayTimer > 0)
+		{
+			ringActive = true;
 
 			LOG("Player Collision");
 			App->player->createball = true;

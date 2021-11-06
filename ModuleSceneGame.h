@@ -45,6 +45,8 @@ public:
 	PhysBody* diamondSensorBig;
 
 	PhysBody* multiBallSensor;
+	PhysBody* eggSensor;
+	PhysBody* ringSensor;
 
 	PhysBody* bonusBall1;
 	PhysBody* bonusBall2;
@@ -57,6 +59,7 @@ public:
 	bool sensed;
 
 	SDL_Texture* circle;
+	SDL_Texture* circle2;
 	SDL_Texture* LeftStick;
 	SDL_Texture* RightStick;
 	SDL_Texture* RightSlider;
@@ -91,7 +94,8 @@ public:
 	SDL_Texture* multiBall = nullptr;
 	SDL_Texture* egg = nullptr;
 	SDL_Texture* ring = nullptr;
-
+	SDL_Texture* eggEffect = nullptr;
+	SDL_Texture* ringEffect = nullptr;
 
 	uint bonus_fx;
 	p2Point<int> ray;
@@ -117,4 +121,11 @@ public:
 
 	bool multiBallActive = false;
 	int multiBallTimer;
+
+	bool eggActive = false;
+	int eggTimer;
+	bool ringActive = false;
+	int ringTimer;
+
+	int scoreChanger = 1;
 };
