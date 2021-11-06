@@ -96,6 +96,7 @@ public:
 	SDL_Texture* ring = nullptr;
 	SDL_Texture* eggEffect = nullptr;
 	SDL_Texture* ringEffect = nullptr;
+	SDL_Texture* sceneUI = nullptr;
 
 	uint bonus_fx;
 	p2Point<int> ray;
@@ -108,6 +109,7 @@ public:
 
 	int gameplayTimer;
 	int score;
+	int highScore = 0;
 
 	char timeText[10] = { "\0" };
 	int timeFont = -1;

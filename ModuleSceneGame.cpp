@@ -102,13 +102,14 @@ bool ModuleSceneGame::Start()
 	ring = App->textures->Load("pinball/ring.png");
 	eggEffect = App->textures->Load("pinball/eggEffect.png");
 	ringEffect = App->textures->Load("pinball/ringEffect.png");
+	sceneUI = App->textures->Load("pinball/sceneGameUI.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	App->audio->PlayMusic("pinball/capitolio2.ogg", 0.0f);
 
 	char lookupTable[] = { "0123456789" };
-	timeFont = App->fonts->Load("pinball/numbers.png", lookupTable, 1);
+	timeFont = App->fonts->Load("pinball/numbers3.png", lookupTable, 1);
 
 	filter.categoryBits = 0x0001;
 	filter.maskBits = 0x0001;
@@ -388,6 +389,11 @@ bool ModuleSceneGame::Start()
 	b.categoryBits = DISABLE;
 	b.maskBits = DISABLE;
 	*/
+
+	if (score >= highScore)
+	{
+		highScore = score;
+	}
 
 	gameplayTimer = 218; // 218 to make it fit with music
 	score = 0;
@@ -737,14 +743,6 @@ update_status ModuleSceneGame::Update()
 		}
 	}
 
-	// Timer
-	//App->fonts->BlitText(180, 10, timeFont, timeText);
-	sprintf_s(timeText, 10, "%3d", gameplayTimer);
-	App->fonts->BlitText(10, 10, timeFont, timeText);
-
-	sprintf_s(timeText, 10, "%4d", score);
-	App->fonts->BlitText(250, 10, timeFont, timeText);
-
 	if (gameplayTimer < 0)
 	{
 		App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
@@ -757,6 +755,21 @@ update_status ModuleSceneGame::Update()
 			App->fade->FadeToBlack((Module*)App->scene_game, (Module*)App->scene_intro, 90);
 		}
 	}
+
+	App->renderer->Blit(sceneUI, 0, 0, NULL, 1.0f, NULL);
+
+	if (gameplayTimer < 0) gameplayTimer = 0;
+
+	// Timer
+	//App->fonts->BlitText(180, 10, timeFont, timeText);
+	sprintf_s(timeText, 10, "%3d", gameplayTimer);
+	App->fonts->BlitText(60, 10, timeFont, timeText);
+
+	sprintf_s(timeText, 10, "%4d", score);
+	App->fonts->BlitText(200, 10, timeFont, timeText);
+
+	sprintf_s(timeText, 10, "%4d", highScore);
+	App->fonts->BlitText(415, 10, timeFont, timeText);
 
 	if (score < 0) score = 0;
 
