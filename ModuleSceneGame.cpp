@@ -39,6 +39,8 @@ ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(
 	letterG = NULL;
 	lettersIN = NULL;
 	letterR = NULL;
+	blueFourArrows = NULL;
+	yellowTwoArrows = NULL;
 	ray_on = false;
 	sensed = false;
 	
@@ -95,6 +97,8 @@ bool ModuleSceneGame::Start()
 	letterG = App->textures->Load("pinball/letterG.png");
 	lettersIN = App->textures->Load("pinball/lettersIN.png");
 	letterR = App->textures->Load("pinball/letterR.png");
+	blueFourArrows = App->textures->Load("pinball/blueFourArrows.png");
+	yellowTwoArrows = App->textures->Load("pinball/yellowTwoArrows.png");
 	timeUp = App->textures->Load("pinball/time_up_L.png");
 	contrast = App->textures->Load("pinball/dark_contrast.png");
 	multiBall = App->textures->Load("pinball/multiBall.png");
@@ -454,6 +458,8 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(letterG);
 	App->textures->Unload(lettersIN);
 	App->textures->Unload(letterR);
+	App->textures->Unload(blueFourArrows);
+	App->textures->Unload(yellowTwoArrows);
 	App->textures->Unload(circle2);
 	App->textures->Unload(egg);
 	App->textures->Unload(ring);
@@ -576,6 +582,9 @@ update_status ModuleSceneGame::Update()
 	if ((delay3 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(letterG, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(lettersIN, 0, 0, NULL, 1.0f, NULL);
 	if ((delay / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
+
+	if ((delay / 60) % 2 == 0) App->renderer->Blit(blueFourArrows, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 120) % 2 == 0) App->renderer->Blit(yellowTwoArrows, 0, 0, NULL, 1.0f, NULL);
 
 	App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
 	App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
