@@ -686,7 +686,7 @@ update_status ModuleSceneGame::Update()
 			bonusBall6 = App->physics->CreateCircle(330, 560, 16);
 		}
 
-		if (multiBallTimer > 900 || gameplayTimer <= 90)
+		if (multiBallTimer > 900 || gameplayTimer <= 2)
 		{
 			multiBallTimer = 0;
 			multiBallActive = false;
@@ -707,7 +707,7 @@ update_status ModuleSceneGame::Update()
 
 		scoreChanger = -1;
 
-		if (eggTimer > 900 || gameplayTimer <= 90)
+		if (eggTimer > 900 || gameplayTimer <= 2)
 		{
 			scoreChanger = 1;
 			eggTimer = 0;
@@ -729,7 +729,7 @@ update_status ModuleSceneGame::Update()
 
 		scoreChanger = 2;
 
-		if (ringTimer > 900 || gameplayTimer <= 90)
+		if (ringTimer > 900 || gameplayTimer <= 2)
 		{
 			scoreChanger = 1;
 			ringTimer = 0;
