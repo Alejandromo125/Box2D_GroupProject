@@ -65,4 +65,8 @@ private:
 	b2RevoluteJoint* l_stick;
 	b2RevoluteJoint* r_stick;
 	b2DistanceJoint* BouncerJoint;
+
+	// Mouse joint
+	b2MouseJoint* mouse_joint;
+	b2Body* mouse_body;
 };

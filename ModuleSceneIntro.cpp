@@ -32,8 +32,8 @@ bool ModuleSceneIntro::Start()
 
 	delay = 0;
 
-	App->player->Disable();
-	App->scene_game->Disable();
+	//App->player->Disable();
+	//App->scene_game->Disable();
 
 	//App->player->createball = false;
 	

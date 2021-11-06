@@ -110,7 +110,47 @@ bool ModuleSceneGame::Start()
 	sensorLow = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
 	sensorLow->listener = this;
 	sensorLow->body->GetFixtureList()->SetFilterData(filter);
+
+	holeSensor1 = App->physics->CreateRectangleSensor(180 + 40 / 2, 245 + 10 / 2, 40, 10);
+	holeSensor1->listener = this;
+	holeSensor1->body->GetFixtureList()->SetFilterData(filter);
+
+	holeSensor2 = App->physics->CreateRectangleSensor(280 + 40 / 2, 385 + 10 / 2, 40, 10);
+	holeSensor2->listener = this;
+	holeSensor2->body->GetFixtureList()->SetFilterData(filter);
 	
+	holeSensor3 = App->physics->CreateRectangleSensor(40 + 40 / 2, 540 + 10 / 2, 40, 10);
+	holeSensor3->listener = this;
+	holeSensor3->body->GetFixtureList()->SetFilterData(filter);
+
+	diamondSensor1 = App->physics->CreateRectangleSensor(244 + 20 / 2, 790 + 10 / 2, 20, 10);
+	diamondSensor1->listener = this;
+	diamondSensor1->body->GetFixtureList()->SetFilterData(filter);
+
+	diamondSensor2 = App->physics->CreateRectangleSensor(305 + 20 / 2, 790 + 10 / 2, 20, 10);
+	diamondSensor2->listener = this;
+	diamondSensor2->body->GetFixtureList()->SetFilterData(filter);
+
+	diamondSensor3 = App->physics->CreateRectangleSensor(365 + 20 / 2, 790 + 10 / 2, 20, 10);
+	diamondSensor3->listener = this;
+	diamondSensor3->body->GetFixtureList()->SetFilterData(filter);
+
+	diamondSensor4 = App->physics->CreateRectangleSensor(425 + 20 / 2, 790 + 10 / 2, 20, 10);
+	diamondSensor4->listener = this;
+	diamondSensor4->body->GetFixtureList()->SetFilterData(filter);
+
+	diamondSensor5 = App->physics->CreateRectangleSensor(274 + 20 / 2, 815 + 10 / 2, 20, 10);
+	diamondSensor5->listener = this;
+	diamondSensor5->body->GetFixtureList()->SetFilterData(filter);
+
+	diamondSensor6 = App->physics->CreateRectangleSensor(396 + 20 / 2, 815 + 10 / 2, 20, 10);
+	diamondSensor6->listener = this;
+	diamondSensor6->body->GetFixtureList()->SetFilterData(filter);
+
+	diamondSensorBig = App->physics->CreateRectangleSensor(310 + 70 / 2, 830 + 30 / 2, 70, 30);
+	diamondSensorBig->listener = this;
+	diamondSensorBig->body->GetFixtureList()->SetFilterData(filter);
+
 	int mapPoints1[80] = {
 	685, 990,
 	740, 990,
@@ -298,11 +338,11 @@ bool ModuleSceneGame::Start()
 	
 	//circles.add(App->physics->CreateCircle(712,814,18));
 	
-	bumpersBodys.add(App->physics->CreateStaticCircle(452, 286, 26));
+	bumpersBodys.add(App->physics->CreateStaticCircle(471, 294, 26));
 	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(352, 286, 26));
+	bumpersBodys.add(App->physics->CreateStaticCircle(465, 196, 26));
 	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(252, 286, 26));
+	bumpersBodys.add(App->physics->CreateStaticCircle(583, 228, 26));
 	bumpersBodys.getLast()->data->listener = this;
 
 
@@ -324,6 +364,7 @@ bool ModuleSceneGame::Start()
 	*/
 
 	gameplayTimer = 218; // 218 to make it fit with music
+	score = 0;
 
 	App->player->createball = true;
 	//App->player->player->body.getLast()->data->listener = this; <-- Al parecer no
@@ -391,7 +432,17 @@ bool ModuleSceneGame::CleanUp()
 	//App->scene_game->RightSliderBody->body->DestroyFixture(App->scene_game->RightSliderBody->body->GetFixtureList());
 	//App->scene_game->LeftSliderBody->body->DestroyFixture(App->scene_game->LeftSliderBody->body->GetFixtureList());
 
+	App->scene_game->diamondSensor1->body->DestroyFixture(App->scene_game->diamondSensor1->body->GetFixtureList());
+	App->scene_game->diamondSensor2->body->DestroyFixture(App->scene_game->diamondSensor2->body->GetFixtureList());
+	App->scene_game->diamondSensor3->body->DestroyFixture(App->scene_game->diamondSensor3->body->GetFixtureList());
+	App->scene_game->diamondSensor4->body->DestroyFixture(App->scene_game->diamondSensor4->body->GetFixtureList());
+	App->scene_game->diamondSensor5->body->DestroyFixture(App->scene_game->diamondSensor5->body->GetFixtureList());
+	App->scene_game->diamondSensor6->body->DestroyFixture(App->scene_game->diamondSensor6->body->GetFixtureList());
+	App->scene_game->diamondSensorBig->body->DestroyFixture(App->scene_game->diamondSensorBig->body->GetFixtureList());
 
+	App->scene_game->holeSensor1->body->DestroyFixture(App->scene_game->holeSensor1->body->GetFixtureList());
+	App->scene_game->holeSensor2->body->DestroyFixture(App->scene_game->holeSensor2->body->GetFixtureList());
+	App->scene_game->holeSensor3->body->DestroyFixture(App->scene_game->holeSensor3->body->GetFixtureList());
 
 	//Esto para los circles y los bumpers también
 	p2List_item<PhysBody*>* chains;
@@ -478,7 +529,7 @@ update_status ModuleSceneGame::Update()
 		
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 18));
 		circles.getLast()->data->listener = this;
-		
+		//App->player->createball = true;
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
@@ -548,6 +599,9 @@ update_status ModuleSceneGame::Update()
 	sprintf_s(timeText, 10, "%3d", gameplayTimer);
 	App->fonts->BlitText(10, 10, timeFont, timeText);
 
+	sprintf_s(timeText, 10, "%4d", score);
+	App->fonts->BlitText(250, 10, timeFont, timeText);
+
 	if (gameplayTimer < 0)
 	{
 		App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
@@ -556,6 +610,7 @@ update_status ModuleSceneGame::Update()
 		if (gameplayTimer < -3)
 		{
 			Mix_PauseMusic();
+			App->player->Disable();
 			App->fade->FadeToBlack((Module*)App->scene_game, (Module*)App->scene_intro, 90);
 		}
 	}
@@ -599,10 +654,56 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				position.x = 688;
 				position.y = 820;
 
+
+				LOG("Player Collision");
+				App->player->player->body->GetFixtureList()->SetFilterData(filter);
+				App->player->createball = true;
+			}
+		}
+		if (bodyA->body == App->player->player->body && (bodyB->body == holeSensor1->body || bodyB->body == holeSensor2->body || bodyB->body == holeSensor3->body))
+		{
+			if (gameplayTimer > 0)
+			{
+				filter.categoryBits = 0x0002;
+				filter.maskBits = 0x0002 | 0x0001;
+
+				b2Vec2 position;
+				position.x = 688;
+				position.y = 820;
+
+				score = score + 150;
+
 				LOG("Player Collision");
 				App->player->player->body->GetFixtureList()->SetFilterData(filter);
 				//App->player->player->body->DestroyFixture(App->player->player->body->GetFixtureList());
 				App->player->createball = true;
+
+				App->audio->PlayFx(bonus_fx);
+			}
+		}
+
+		if (bodyA->body == App->player->player->body && (bodyB->body == diamondSensor1->body || bodyB->body == diamondSensor2->body || bodyB->body == diamondSensor3->body ||
+			bodyB->body == diamondSensor4->body || bodyB->body == diamondSensor5->body || bodyB->body == diamondSensor6->body))
+		{
+			if (gameplayTimer > 0)
+			{
+
+				score = score + 3;
+
+				LOG("Player Collision");
+
+				App->audio->PlayFx(bonus_fx);
+			}
+		}
+
+		if (bodyA->body == App->player->player->body && bodyB->body == diamondSensorBig->body)
+		{
+			if (gameplayTimer > 0)
+			{
+
+				score = score + 5;
+
+				LOG("Player Collision");
 
 				App->audio->PlayFx(bonus_fx);
 			}

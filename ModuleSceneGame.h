@@ -32,6 +32,18 @@ public:
 	PhysBody* BouncerPivot;
 
 	PhysBody* sensorLow;
+	PhysBody* holeSensor1;
+	PhysBody* holeSensor2;
+	PhysBody* holeSensor3;
+
+	PhysBody* diamondSensor1;
+	PhysBody* diamondSensor2;
+	PhysBody* diamondSensor3;
+	PhysBody* diamondSensor4;
+	PhysBody* diamondSensor5;
+	PhysBody* diamondSensor6;
+	PhysBody* diamondSensorBig;
+
 	bool sensed;
 
 	SDL_Texture* circle;
@@ -77,6 +89,7 @@ public:
 	SDL_Texture* FrontGameScene = nullptr;
 
 	int gameplayTimer;
+	int score;
 
 	char timeText[10] = { "\0" };
 	int timeFont = -1;
