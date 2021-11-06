@@ -21,6 +21,10 @@ public:
 	
 	SDL_Texture* introLogo = nullptr;
 	SDL_Texture* startButton = nullptr;
+	SDL_Texture* black = nullptr;
+
+	int transitionTimer;
+	bool transition;
 
 	int delay;
 

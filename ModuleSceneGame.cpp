@@ -52,6 +52,7 @@ ModuleSceneGame::~ModuleSceneGame()
 // Load assets
 bool ModuleSceneGame::Start()
 {
+
 	LOG("Loading Game assets");
 	bool ret = true;
 
@@ -528,6 +529,8 @@ bool ModuleSceneGame::CleanUp()
 // Update: draw background
 update_status ModuleSceneGame::Update()
 {
+	Mix_VolumeMusic(56);
+
 	if ((delay % 60) == 0)
 	{
 		/*
