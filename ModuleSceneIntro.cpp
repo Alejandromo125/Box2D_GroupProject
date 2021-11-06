@@ -61,7 +61,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	delay++;
-	Mix_VolumeMusic(3);
+	Mix_VolumeMusic(45);
 		
 	App->renderer->Blit(introLogo, 0, 0, NULL, 1.0f,NULL);
 
