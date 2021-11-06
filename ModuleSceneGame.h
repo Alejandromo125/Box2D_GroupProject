@@ -44,6 +44,16 @@ public:
 	PhysBody* diamondSensor6;
 	PhysBody* diamondSensorBig;
 
+	PhysBody* multiBallSensor;
+
+	PhysBody* bonusBall1 = nullptr;
+	PhysBody* bonusBall2 = nullptr;
+	PhysBody* bonusBall3 = nullptr;
+	PhysBody* bonusBall4 = nullptr;
+	PhysBody* bonusBall5 = nullptr;
+	PhysBody* bonusBall6 = nullptr;
+
+
 	bool sensed;
 
 	SDL_Texture* circle;
@@ -95,4 +105,11 @@ public:
 	int timeFont = -1;
 
 	int comboAnimationTimer;
+
+	int bonusBall1PositionX = 0, bonusBall1PositionY = 0;
+	int bonusBall2PositionX = 0, bonusBall2PositionY = 0;
+	int bonusBall3PositionX = 0, bonusBall3PositionY = 0;
+	int bonusBall4PositionX = 0, bonusBall4PositionY = 0;
+	int bonusBall5PositionX = 0, bonusBall5PositionY = 0;
+	int bonusBall6PositionX = 0, bonusBall6PositionY = 0;
 };

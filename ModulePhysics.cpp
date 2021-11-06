@@ -89,6 +89,12 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	b->SetUserData(pbody);
 	pbody->width = pbody->height = radius;
 
+	pbody->listener = App->scene_game;
+	b2Filter f;
+	f.categoryBits = 0x0001;
+	f.maskBits = 0x0001 | 0x0002;
+	pbody->body->GetFixtureList()->SetFilterData(f);
+
 	return pbody;
 }
 

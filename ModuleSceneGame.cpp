@@ -331,6 +331,14 @@ bool ModuleSceneGame::Start()
 	LeftStickAnchor = App->physics->CreateStaticCircle(223, 882, 3);
 	RightStickAnchor = App->physics->CreateStaticCircle(466, 882, 3);
 
+	bonusBall1 = App->physics->CreateCircle(320, 560, 16);
+	bonusBall2 = App->physics->CreateCircle(330, 560, 16);
+	bonusBall3 = App->physics->CreateCircle(330, 560, 16);
+	bonusBall4 = App->physics->CreateCircle(330, 560, 16);
+	bonusBall5 = App->physics->CreateCircle(330, 560, 16);
+	bonusBall6 = App->physics->CreateCircle(330, 560, 16);
+
+
 	App->physics->CreateFlipperJoints();
 
 
@@ -363,7 +371,7 @@ bool ModuleSceneGame::Start()
 	b.maskBits = DISABLE;
 	*/
 
-	gameplayTimer = 218; // 218 to make it fit with music
+	gameplayTimer = 2; // 218 to make it fit with music
 	score = 0;
 
 	App->player->createball = true;
@@ -447,6 +455,13 @@ bool ModuleSceneGame::CleanUp()
 	App->scene_game->holeSensor2->body->DestroyFixture(App->scene_game->holeSensor2->body->GetFixtureList());
 	App->scene_game->holeSensor3->body->DestroyFixture(App->scene_game->holeSensor3->body->GetFixtureList());
 
+	App->scene_game->bonusBall1->body->DestroyFixture(App->scene_game->bonusBall1->body->GetFixtureList());
+	App->scene_game->bonusBall2->body->DestroyFixture(App->scene_game->bonusBall2->body->GetFixtureList());
+	App->scene_game->bonusBall3->body->DestroyFixture(App->scene_game->bonusBall3->body->GetFixtureList());
+	App->scene_game->bonusBall4->body->DestroyFixture(App->scene_game->bonusBall4->body->GetFixtureList());
+	App->scene_game->bonusBall5->body->DestroyFixture(App->scene_game->bonusBall5->body->GetFixtureList());
+	App->scene_game->bonusBall6->body->DestroyFixture(App->scene_game->bonusBall6->body->GetFixtureList());
+
 	//Esto para los circles y los bumpers también
 	p2List_item<PhysBody*>* chains;
 	int i = 0;
@@ -480,9 +495,6 @@ update_status ModuleSceneGame::Update()
 	delay++;
 
 	App->renderer->Blit(GameScene, 0, 0, NULL, 1.0f, NULL);
-
-	App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
-	App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
 
 	if (delay > 10)
 	{
@@ -525,6 +537,29 @@ update_status ModuleSceneGame::Update()
 	if ((delay3 / 60) % 2 == 0) App->renderer->Blit(letterG, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(lettersIN, 0, 0, NULL, 1.0f, NULL);
 	if ((delay / 60) % 2 == 0) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
+
+	App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
+	App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
+
+
+	//Bonus balls
+	bonusBall1->GetPosition(bonusBall1PositionX, bonusBall1PositionY);
+	App->renderer->Blit(circle, bonusBall1PositionX, bonusBall1PositionY, NULL, 1.0f, bonusBall1->GetRotation());
+
+	bonusBall2->GetPosition(bonusBall2PositionX, bonusBall2PositionY);
+	App->renderer->Blit(circle, bonusBall2PositionX, bonusBall2PositionY, NULL, 1.0f, bonusBall2->GetRotation());
+
+	bonusBall3->GetPosition(bonusBall3PositionX, bonusBall3PositionY);
+	App->renderer->Blit(circle, bonusBall3PositionX, bonusBall3PositionY, NULL, 1.0f, bonusBall3->GetRotation());
+
+	bonusBall4->GetPosition(bonusBall4PositionX, bonusBall4PositionY);
+	App->renderer->Blit(circle, bonusBall4PositionX, bonusBall4PositionY, NULL, 1.0f, bonusBall4->GetRotation());
+
+	bonusBall5->GetPosition(bonusBall5PositionX, bonusBall5PositionY);
+	App->renderer->Blit(circle, bonusBall5PositionX, bonusBall5PositionY, NULL, 1.0f, bonusBall5->GetRotation());
+
+	bonusBall6->GetPosition(bonusBall6PositionX, bonusBall6PositionY);
+	App->renderer->Blit(circle, bonusBall6PositionX, bonusBall6PositionY, NULL, 1.0f, bonusBall6->GetRotation());
 
 	
 	/*
@@ -614,13 +649,15 @@ update_status ModuleSceneGame::Update()
 		App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
 		App->renderer->Blit(timeUp, (SCREEN_WIDTH / 2) - (560 / 2), (SCREEN_HEIGHT / 2) - (260 / 2), NULL, 1.0f, NULL);
 		
-		if (gameplayTimer < -3)
+		if (gameplayTimer < -2)
 		{
 			Mix_PauseMusic();
 			App->player->Disable();
 			App->fade->FadeToBlack((Module*)App->scene_game, (Module*)App->scene_intro, 90);
 		}
 	}
+
+	if (score < 0) score = 0;
 
 	return UPDATE_CONTINUE;
 }
@@ -661,6 +698,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				position.x = 688;
 				position.y = 820;
 
+				score = score - 5;
 
 				LOG("Player Collision");
 				App->player->player->body->GetFixtureList()->SetFilterData(filter);
@@ -688,7 +726,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				App->audio->PlayFx(bonus_fx);
 			}
 		}
-
+		
 		if (bodyA->body == App->player->player->body && (bodyB->body == diamondSensor1->body || bodyB->body == diamondSensor2->body || bodyB->body == diamondSensor3->body ||
 			bodyB->body == diamondSensor4->body || bodyB->body == diamondSensor5->body || bodyB->body == diamondSensor6->body))
 		{
@@ -704,6 +742,37 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 
 		if (bodyA->body == App->player->player->body && bodyB->body == diamondSensorBig->body)
+		{
+			if (gameplayTimer > 0)
+			{
+
+				score = score + 5;
+
+				LOG("Player Collision");
+
+				App->audio->PlayFx(bonus_fx);
+			}
+		}
+
+		if ((bodyA->body == App->scene_game->bonusBall1->body || bodyA->body == App->scene_game->bonusBall2->body || bodyA->body == App->scene_game->bonusBall3->body
+			|| bodyA->body == App->scene_game->bonusBall4->body || bodyA->body == App->scene_game->bonusBall5->body || bodyA->body == App->scene_game->bonusBall6->body)
+			&& (bodyB->body == diamondSensor1->body || bodyB->body == diamondSensor2->body || bodyB->body == diamondSensor3->body ||
+				bodyB->body == diamondSensor4->body || bodyB->body == diamondSensor5->body || bodyB->body == diamondSensor6->body))
+		{
+			if (gameplayTimer > 0)
+			{
+
+				score = score + 3;
+
+				LOG("Player Collision");
+
+				App->audio->PlayFx(bonus_fx);
+			}
+		}
+
+		if ((bodyA->body == App->scene_game->bonusBall1->body || bodyA->body == App->scene_game->bonusBall2->body || bodyA->body == App->scene_game->bonusBall3->body
+			|| bodyA->body == App->scene_game->bonusBall4->body || bodyA->body == App->scene_game->bonusBall5->body || bodyA->body == App->scene_game->bonusBall6->body)
+			&& bodyB->body == diamondSensorBig->body)
 		{
 			if (gameplayTimer > 0)
 			{
