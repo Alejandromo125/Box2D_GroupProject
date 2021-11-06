@@ -31,6 +31,7 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 	App->textures->Unload(graphics);
+	App->player->player->body->DestroyFixture(App->player->player->body->GetFixtureList());
 
 	return true;
 }

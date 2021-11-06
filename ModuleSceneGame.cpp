@@ -323,7 +323,7 @@ bool ModuleSceneGame::Start()
 	b.maskBits = DISABLE;
 	*/
 
-	gameplayTimer = 218;
+	gameplayTimer = 218; // 218 to make it fit with music
 
 	App->player->createball = true;
 	//App->player->player->body.getLast()->data->listener = this; <-- Al parecer no
@@ -376,6 +376,37 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(lettersIN);
 	App->textures->Unload(letterR);
 
+
+	App->scene_game->RightStickBody->body->DestroyFixture(App->scene_game->RightStickBody->body->GetFixtureList());
+	App->scene_game->LeftStickBody->body->DestroyFixture(App->scene_game->LeftStickBody->body->GetFixtureList());
+
+	App->scene_game->RightStickAnchor->body->DestroyFixture(App->scene_game->RightStickAnchor->body->GetFixtureList());
+	App->scene_game->LeftStickAnchor->body->DestroyFixture(App->scene_game->LeftStickAnchor->body->GetFixtureList());
+
+	App->scene_game->Bouncer->body->DestroyFixture(App->scene_game->Bouncer->body->GetFixtureList());
+	App->scene_game->BouncerPivot->body->DestroyFixture(App->scene_game->BouncerPivot->body->GetFixtureList());
+
+	App->scene_game->sensorLow->body->DestroyFixture(App->scene_game->sensorLow->body->GetFixtureList());
+
+	//App->scene_game->RightSliderBody->body->DestroyFixture(App->scene_game->RightSliderBody->body->GetFixtureList());
+	//App->scene_game->LeftSliderBody->body->DestroyFixture(App->scene_game->LeftSliderBody->body->GetFixtureList());
+
+
+
+	//Esto para los circles y los bumpers también
+	p2List_item<PhysBody*>* chains;
+	int i = 0;
+
+	for (chains = App->scene_game->mapLimits.getFirst(); i < mapLimits.count(); i++)
+	{
+		if (chains->data->body->GetFixtureList() != nullptr)
+		{
+			chains->data->body->DestroyFixture(chains->data->body->GetFixtureList());
+		}
+		
+		chains->next; // Esta instrucción se la salta porque le da la gana y por lo tanto no puede iterar correctamente y no se borran todas las cosas
+	}
+	
 	return true;
 }
 
@@ -570,7 +601,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 				LOG("Player Collision");
 				App->player->player->body->GetFixtureList()->SetFilterData(filter);
-				//App->player->player->body->DestroyFixture();
+				//App->player->player->body->DestroyFixture(App->player->player->body->GetFixtureList());
 				App->player->createball = true;
 
 				App->audio->PlayFx(bonus_fx);
