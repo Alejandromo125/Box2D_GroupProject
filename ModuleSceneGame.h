@@ -89,6 +89,8 @@ public:
 	SDL_Texture* letterG = nullptr;
 	SDL_Texture* lettersIN = nullptr;
 	SDL_Texture* letterR = nullptr;
+	SDL_Texture* blueFourArrows = nullptr;
+	SDL_Texture* yellowTwoArrows = nullptr;
 	SDL_Texture* timeUp = nullptr;
 	SDL_Texture* contrast = nullptr;
 	SDL_Texture* multiBall = nullptr;
