@@ -93,4 +93,6 @@ public:
 
 	char timeText[10] = { "\0" };
 	int timeFont = -1;
+
+	int comboAnimationTimer;
 };

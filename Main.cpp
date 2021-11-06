@@ -69,6 +69,14 @@ int main(int argc, char ** argv)
 				SDL_Delay(frameDelay - frameTime);
 			}
 
+			if (App->slowMotion == true)
+			{
+				if (150 > frameTime)
+				{
+					SDL_Delay(200 - frameTime);
+				}
+			}
+
 			if (update_return == UPDATE_ERROR)
 			{
 				LOG("Application Update exits with ERROR");

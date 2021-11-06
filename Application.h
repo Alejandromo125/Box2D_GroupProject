@@ -31,6 +31,7 @@ public:
 	ModuleFadeToBlack* fade;
 	ModuleFonts* fonts;
 
+	bool slowMotion;
 
 private:
 

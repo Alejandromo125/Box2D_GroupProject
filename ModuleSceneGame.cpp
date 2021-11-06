@@ -310,9 +310,9 @@ bool ModuleSceneGame::Start()
 	int RightFlipper[14] = {
 		72, 5,
 		65, 0,
-		2, 6,
-		0, 12,
-		4, 16,
+		-36, 6,
+		-40, 12,
+		-34, 16,
 		64, 18,
 		72, 14
 	};
@@ -320,9 +320,9 @@ bool ModuleSceneGame::Start()
 		0, 10,
 		2, 3,
 		10, 1,
-		69, 6,
-		72, 11,
-		68, 17,
+		109, 6,
+		112, 11,
+		108, 17,
 		5, 18
 	};
 
@@ -370,6 +370,9 @@ bool ModuleSceneGame::Start()
 	//App->player->player->body.getLast()->data->listener = this; <-- Al parecer no
 
 	App->player->Enable();
+	
+	App->slowMotion = false;
+	comboAnimationTimer = 0;
 
 	delay = 0;
 	delay2 = 0;
@@ -524,6 +527,7 @@ update_status ModuleSceneGame::Update()
 	if ((delay / 60) % 2 == 0) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
 
 	
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		
@@ -531,7 +535,9 @@ update_status ModuleSceneGame::Update()
 		circles.getLast()->data->listener = this;
 		//App->player->createball = true;
 	}
+	*/
 	
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
 		//Add bouncer impulse
@@ -542,34 +548,35 @@ update_status ModuleSceneGame::Update()
 			Bouncer->body->ApplyForce({ 0,350 }, { 0,0 }, true);
 		}
 	}
+	*/
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
 		//Add bouncer impulse
-		Bouncer->body->ApplyForce({ 0,-500 }, { 0,0 }, true);
+		Bouncer->body->ApplyForce({ 0,-2000 }, { 0,0 }, true);
 
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 		{
-			Bouncer->body->ApplyForce({ 0,500 }, { 0,0 }, true);
+			//Bouncer->body->ApplyForce({ 0,500 }, { 0,0 }, true);
 		}
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		LeftStickBody->body->ApplyForce({ 5,60 }, { 0,0 }, true);
+		LeftStickBody->body->ApplyForce({ 5,150 }, { 0,0 }, true);
 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 		{
-			LeftStickBody->body->ApplyForce({ -5,-60 }, { 0,0 }, true);
+			//LeftStickBody->body->ApplyForce({ -5,-60 }, { 0,0 }, true);
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		RightStickBody->body->ApplyForce({ -5,60 }, { 0,0 }, true);
+		RightStickBody->body->ApplyForce({ -5,-60 }, { 0,0 }, true);
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
 		{
-			RightStickBody->body->ApplyForce({ 5,-60 }, { 0,0 }, true);
+			//RightStickBody->body->ApplyForce({ 5,-60 }, { 0,0 }, true);
 		}
 	}
 	// Prepare for raycast ------------------------------------------------------
