@@ -46,12 +46,12 @@ public:
 
 	PhysBody* multiBallSensor;
 
-	PhysBody* bonusBall1 = nullptr;
-	PhysBody* bonusBall2 = nullptr;
-	PhysBody* bonusBall3 = nullptr;
-	PhysBody* bonusBall4 = nullptr;
-	PhysBody* bonusBall5 = nullptr;
-	PhysBody* bonusBall6 = nullptr;
+	PhysBody* bonusBall1;
+	PhysBody* bonusBall2;
+	PhysBody* bonusBall3;
+	PhysBody* bonusBall4;
+	PhysBody* bonusBall5;
+	PhysBody* bonusBall6;
 
 
 	bool sensed;
@@ -88,6 +88,10 @@ public:
 	SDL_Texture* letterR = nullptr;
 	SDL_Texture* timeUp = nullptr;
 	SDL_Texture* contrast = nullptr;
+	SDL_Texture* multiBall = nullptr;
+	SDL_Texture* egg = nullptr;
+	SDL_Texture* ring = nullptr;
+
 
 	uint bonus_fx;
 	p2Point<int> ray;
@@ -104,12 +108,13 @@ public:
 	char timeText[10] = { "\0" };
 	int timeFont = -1;
 
-	int comboAnimationTimer;
-
 	int bonusBall1PositionX = 0, bonusBall1PositionY = 0;
 	int bonusBall2PositionX = 0, bonusBall2PositionY = 0;
 	int bonusBall3PositionX = 0, bonusBall3PositionY = 0;
 	int bonusBall4PositionX = 0, bonusBall4PositionY = 0;
 	int bonusBall5PositionX = 0, bonusBall5PositionY = 0;
 	int bonusBall6PositionX = 0, bonusBall6PositionY = 0;
+
+	bool multiBallActive = false;
+	int multiBallTimer;
 };

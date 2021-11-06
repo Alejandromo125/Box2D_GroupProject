@@ -96,6 +96,9 @@ bool ModuleSceneGame::Start()
 	letterR = App->textures->Load("pinball/letterR.png");
 	timeUp = App->textures->Load("pinball/time_up_L.png");
 	contrast = App->textures->Load("pinball/dark_contrast.png");
+	multiBall = App->textures->Load("pinball/multiBall.png");
+	egg = App->textures->Load("pinball/egg.png");
+	ring = App->textures->Load("pinball/ring.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -150,6 +153,10 @@ bool ModuleSceneGame::Start()
 	diamondSensorBig = App->physics->CreateRectangleSensor(310 + 70 / 2, 830 + 30 / 2, 70, 30);
 	diamondSensorBig->listener = this;
 	diamondSensorBig->body->GetFixtureList()->SetFilterData(filter);
+
+	multiBallSensor = App->physics->CreateRectangleSensor(640 + 20 / 2, 510 + 130 / 2, 20, 130);
+	multiBallSensor->listener = this;
+	multiBallSensor->body->GetFixtureList()->SetFilterData(filter);
 
 	int mapPoints1[80] = {
 	685, 990,
@@ -331,12 +338,12 @@ bool ModuleSceneGame::Start()
 	LeftStickAnchor = App->physics->CreateStaticCircle(223, 882, 3);
 	RightStickAnchor = App->physics->CreateStaticCircle(466, 882, 3);
 
-	bonusBall1 = App->physics->CreateCircle(320, 560, 16);
-	bonusBall2 = App->physics->CreateCircle(330, 560, 16);
-	bonusBall3 = App->physics->CreateCircle(330, 560, 16);
-	bonusBall4 = App->physics->CreateCircle(330, 560, 16);
-	bonusBall5 = App->physics->CreateCircle(330, 560, 16);
-	bonusBall6 = App->physics->CreateCircle(330, 560, 16);
+	bonusBall1 = App->physics->CreateCircle(320, 9999, 16);
+	bonusBall2 = App->physics->CreateCircle(330, 9999, 16);
+	bonusBall3 = App->physics->CreateCircle(330, 9999, 16);
+	bonusBall4 = App->physics->CreateCircle(330, 9999, 16);
+	bonusBall5 = App->physics->CreateCircle(330, 9999, 16);
+	bonusBall6 = App->physics->CreateCircle(330, 9999, 16);
 
 
 	App->physics->CreateFlipperJoints();
@@ -371,7 +378,7 @@ bool ModuleSceneGame::Start()
 	b.maskBits = DISABLE;
 	*/
 
-	gameplayTimer = 2; // 218 to make it fit with music
+	gameplayTimer = 218; // 218 to make it fit with music
 	score = 0;
 
 	App->player->createball = true;
@@ -380,7 +387,7 @@ bool ModuleSceneGame::Start()
 	App->player->Enable();
 	
 	App->slowMotion = false;
-	comboAnimationTimer = 0;
+	multiBallTimer = 0;
 
 	delay = 0;
 	delay2 = 0;
@@ -521,8 +528,8 @@ update_status ModuleSceneGame::Update()
 	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(gge2, 0, 0, NULL, 1.0f, NULL);
 	if ((delay / 60) % 2 == 0) App->renderer->Blit(gge3, 0, 0, NULL, 1.0f, NULL);
 
-	if ((delay / 60) % 2 == 0) App->renderer->Blit(twoArrows1, 0, 0, NULL, 1.0f, NULL);
-	if ((delay2 / 60) % 2 == 0) App->renderer->Blit(twoArrows2, 0, 0, NULL, 1.0f, NULL);
+	if ((delay / 60) % 2 == 0 && multiBallActive == false) App->renderer->Blit(twoArrows1, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 60) % 2 == 0 && multiBallActive == false) App->renderer->Blit(twoArrows2, 0, 0, NULL, 1.0f, NULL);
 
 	if ((delay3 / 120) % 2 == 0) App->renderer->Blit(digit1, 0, 0, NULL, 1.0f, NULL);
 	if ((delay2 / 120) % 2 == 0) App->renderer->Blit(digit2, 0, 0, NULL, 1.0f, NULL);
@@ -636,6 +643,33 @@ update_status ModuleSceneGame::Update()
 
 	App->renderer->Blit(FrontGameScene, 0, 0, NULL, 1.0f, NULL);
 
+	if (multiBallActive == true)
+	{
+		multiBallTimer++;
+
+		if (multiBallTimer >= 1 && multiBallTimer <= 90)
+		{
+			App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
+			App->renderer->Blit(multiBall, 190, 390, NULL, 1.0f, NULL);
+		}
+
+		if (multiBallTimer > 90 && multiBallTimer <= 91)
+		{
+			bonusBall1 = App->physics->CreateCircle(130, 460, 16);
+			bonusBall2 = App->physics->CreateCircle(350, 550, 16);
+			bonusBall3 = App->physics->CreateCircle(450, 350, 16);
+			bonusBall4 = App->physics->CreateCircle(300, 640, 16);
+			bonusBall5 = App->physics->CreateCircle(380, 264, 16);
+			bonusBall6 = App->physics->CreateCircle(330, 560, 16);
+		}
+
+		if (multiBallTimer > 900)
+		{
+			multiBallTimer = 0;
+			multiBallActive = false;
+		}
+	}
+
 	// Timer
 	//App->fonts->BlitText(180, 10, timeFont, timeText);
 	sprintf_s(timeText, 10, "%3d", gameplayTimer);
@@ -741,7 +775,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 		}
 
-		if (bodyA->body == App->player->player->body && bodyB->body == diamondSensorBig->body)
+		if (bodyA->body == App->player->player->body && bodyB->body == App->scene_game->diamondSensorBig->body)
 		{
 			if (gameplayTimer > 0)
 			{
@@ -786,5 +820,16 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 	}
 
-	
+	if (bodyA->body == App->player->player->body && bodyB->body == App->scene_game->multiBallSensor->body && multiBallActive == false)
+	{
+		if (gameplayTimer > 0)
+		{
+			multiBallActive = true;
+
+			LOG("Player Collision");
+			App->player->createball = true;
+
+			App->audio->PlayFx(bonus_fx);
+		}
+	}
 }
