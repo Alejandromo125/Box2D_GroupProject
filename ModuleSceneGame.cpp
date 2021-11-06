@@ -39,6 +39,8 @@ ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(
 	letterG = NULL;
 	lettersIN = NULL;
 	letterR = NULL;
+	blueFourArrows = NULL;
+	yellowTwoArrows = NULL;
 	ray_on = false;
 	sensed = false;
 	
@@ -95,6 +97,8 @@ bool ModuleSceneGame::Start()
 	letterG = App->textures->Load("pinball/letterG.png");
 	lettersIN = App->textures->Load("pinball/lettersIN.png");
 	letterR = App->textures->Load("pinball/letterR.png");
+	blueFourArrows = App->textures->Load("pinball/blueFourArrows.png");
+	yellowTwoArrows = App->textures->Load("pinball/yellowTwoArrows.png");
 	timeUp = App->textures->Load("pinball/time_up_L.png");
 	contrast = App->textures->Load("pinball/dark_contrast.png");
 	multiBall = App->textures->Load("pinball/multiBall.png");
@@ -371,8 +375,7 @@ bool ModuleSceneGame::Start()
 	bumpersBodys.getLast()->data->listener = this;
 	bumpersBodys.add(App->physics->CreateStaticCircle(583, 228, 26));
 	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(628, 210, 16));
-	bumpersBodys.getLast()->data->listener = this;
+
 
 
 	Bouncer = App->physics->CreateBouncer(715, 900, 54, 45);
@@ -455,6 +458,8 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(letterG);
 	App->textures->Unload(lettersIN);
 	App->textures->Unload(letterR);
+	App->textures->Unload(blueFourArrows);
+	App->textures->Unload(yellowTwoArrows);
 	App->textures->Unload(circle2);
 	App->textures->Unload(egg);
 	App->textures->Unload(ring);
@@ -578,8 +583,11 @@ update_status ModuleSceneGame::Update()
 	if ((delay2 / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(lettersIN, 0, 0, NULL, 1.0f, NULL);
 	if ((delay / 60) % 2 == 0 && multiBallActive == false && ringActive == false && eggActive == false) App->renderer->Blit(letterR, 0, 0, NULL, 1.0f, NULL);
 
-	//App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
-	//App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
+	if ((delay / 60) % 2 == 0) App->renderer->Blit(blueFourArrows, 0, 0, NULL, 1.0f, NULL);
+	if ((delay2 / 120) % 2 == 0) App->renderer->Blit(yellowTwoArrows, 0, 0, NULL, 1.0f, NULL);
+
+	App->renderer->Blit(LeftStick, 366, 882, NULL, 0.0f,LeftStickBody->body->GetAngle());
+	App->renderer->Blit(RightStick, 327, 882, NULL, 0.0f, RightStickBody->body->GetAngle());
 
 
 	//Bonus balls
@@ -601,12 +609,7 @@ update_status ModuleSceneGame::Update()
 	bonusBall6->GetPosition(bonusBall6PositionX, bonusBall6PositionY);
 	App->renderer->Blit(circle2, bonusBall6PositionX, bonusBall6PositionY, NULL, 1.0f, bonusBall6->GetRotation());
 
-	RightStickBody->GetPosition(RightStickPosX, RightStickPosY);
-	App->renderer->Blit(RightStick, RightStickPosX - 35, RightStickPosY - 56, NULL, 1.0f, RightStickBody->GetRotation() + 20, 30, 50);
-
-	LeftStickBody->GetPosition(LeftStickPosX, LeftStickPosY);
-	App->renderer->Blit(LeftStick, LeftStickPosX - 10, LeftStickPosY - 30, NULL, 1.0f, LeftStickBody->GetRotation() - 20, 10, 20);
-
+	
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{

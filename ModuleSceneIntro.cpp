@@ -30,6 +30,8 @@ bool ModuleSceneIntro::Start()
 	introLogo = App->textures->Load("pinball/introbg.png");
 	startButton = App->textures->Load("pinball/startButton.png");
 
+	App->audio->PlayMusic("pinball/introMusic.ogg", 0.0f);
+
 	delay = 0;
 
 	//App->player->Disable();
@@ -52,7 +54,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	delay++;
-	Mix_PauseMusic();
+	//Mix_PauseMusic(); Intro Music
 		
 	App->renderer->Blit(introLogo, 0, 0, NULL, 1.0f,NULL);
 
