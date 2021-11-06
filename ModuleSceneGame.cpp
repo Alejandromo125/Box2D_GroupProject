@@ -743,7 +743,7 @@ update_status ModuleSceneGame::Update()
 		}
 	}
 
-	if (gameplayTimer < 0)
+	if (gameplayTimer <= 0)
 	{
 		App->renderer->Blit(contrast, 0, 0, NULL, 1.0f, NULL);
 		App->renderer->Blit(timeUp, (SCREEN_WIDTH / 2) - (560 / 2), (SCREEN_HEIGHT / 2) - (260 / 2), NULL, 1.0f, NULL);
@@ -758,12 +758,10 @@ update_status ModuleSceneGame::Update()
 
 	App->renderer->Blit(sceneUI, 0, 0, NULL, 1.0f, NULL);
 
-	if (gameplayTimer < 0) gameplayTimer = 0;
-
 	// Timer
 	//App->fonts->BlitText(180, 10, timeFont, timeText);
 	sprintf_s(timeText, 10, "%3d", gameplayTimer);
-	App->fonts->BlitText(60, 10, timeFont, timeText);
+	if(gameplayTimer >= 0) App->fonts->BlitText(60, 10, timeFont, timeText);
 
 	sprintf_s(timeText, 10, "%4d", score);
 	App->fonts->BlitText(200, 10, timeFont, timeText);
