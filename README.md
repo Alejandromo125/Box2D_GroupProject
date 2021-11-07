@@ -33,3 +33,6 @@ It makes you loose score points instead of wining them during 15 seconds.
 Instead of having limited tries defined by lives, you can throw the ball as many times as you want until the time runs out wich makes the experience much more exciting and enjoyable.
 
 The game also has very good music to cheer your mood up.
+
+## Development
+At first it wasn't easy to deal with Box2D and its functions, but after working with it we figured out the basic concepts and started working with it. The only but actually very problematic issue we've had is with eliminating the collision shapes from the world to avoid the objects colliding with them. Specially with the ones stored in lists where the program misteriously skips the instruction to iterate to the next element of the list.
