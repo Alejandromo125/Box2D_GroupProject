@@ -5,16 +5,16 @@ A pinball game made with Box2D for physics class.
 ## Controls
 
 ### Gameplay Keys
-Space Bar to start the game
+Space Bar: To start the game
 
-Left key to move left stick
+Left key: Move left stick
 
-Right key to move right stick
+Right key: Move right stick
 
-Down key to activate spring
+Down key: Activate spring
 
 ### Debugging Keys
-F1 to view colliders
+F1: To view colliders
 
 Mouse left click on the ball while in view colliders mode to drag the ball anywhere.
 
