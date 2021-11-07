@@ -84,7 +84,7 @@ update_status ModuleSceneIntro::Update()
 		{
 			transition = true;
 		}
-		trackID = 2;
+		trackID = 1;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
@@ -94,7 +94,7 @@ update_status ModuleSceneIntro::Update()
 		{
 			transition = true;
 		}
-		trackID = 1;
+		trackID = 2;
 	}
 
 	if (transitionTimer > 150)
