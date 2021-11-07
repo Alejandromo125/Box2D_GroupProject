@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleSceneGame.h"
+#include "ModuleSceneIntro.h"
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
@@ -111,8 +112,13 @@ bool ModuleSceneGame::Start()
 	bouncer = App->textures->Load("pinball/spring.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	bonusOp_fx = App->audio->LoadFx("pinball/bonusOp.wav");
+	ring_fx = App->audio->LoadFx("pinball/ring.wav");
+	egg_fx = App->audio->LoadFx("pinball/egg.wav");
+	multiBall_fx = App->audio->LoadFx("pinball/multiBall.wav");
 
-	App->audio->PlayMusic("pinball/capitolio2.ogg", 0.0f);
+	if (App->scene_intro->trackID == 1)App->audio->PlayMusic("pinball/capitolio2.ogg", 0.0f);
+	if (App->scene_intro->trackID == 2)App->audio->PlayMusic("pinball/sonic_gameplay.ogg", 0.0f);
 
 	char lookupTable[] = { "0123456789" };
 	timeFont = App->fonts->Load("pinball/numbers3.png", lookupTable, 1);
@@ -548,6 +554,7 @@ bool ModuleSceneGame::CleanUp()
 update_status ModuleSceneGame::Update()
 {
 	Mix_VolumeMusic(56);
+	//Mix_Volume(1, 16);
 
 	if ((delay % 60) == 0)
 	{
@@ -859,6 +866,8 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 				score = score - 50;
 
+				App->audio->PlayFx(bonusOp_fx);
+
 				LOG("Player Collision");
 				App->player->player->body->GetFixtureList()->SetFilterData(filter);
 				App->player->createball = true;
@@ -883,7 +892,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				App->player->createball = true;
 
 				if (eggActive == false) App->audio->PlayFx(bonus_fx);
-				if (eggActive == true) App->audio->PlayFx(bonus_fx);
+				//if (eggActive == true) App->audio->PlayFx(bonusOp_fx);
 			}
 		}
 		
@@ -898,7 +907,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				LOG("Player Collision");
 
 				if (eggActive == false) App->audio->PlayFx(bonus_fx);
-				if (eggActive == true) App->audio->PlayFx(bonus_fx);
+				//if (eggActive == true) App->audio->PlayFx(bonusOp_fx);
 			}
 		}
 
@@ -912,7 +921,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				LOG("Player Collision");
 
 				if (eggActive == false) App->audio->PlayFx(bonus_fx);
-				if (eggActive == true) App->audio->PlayFx(bonus_fx);
+				//if (eggActive == true) App->audio->PlayFx(bonusOp_fx);
 			}
 		}
 
@@ -929,7 +938,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				LOG("Player Collision");
 
 				if (eggActive == false) App->audio->PlayFx(bonus_fx);
-				if (eggActive == true) App->audio->PlayFx(bonus_fx);
+				//if (eggActive == true) App->audio->PlayFx(bonusOp_fx);
 			}
 		}
 
@@ -945,7 +954,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				LOG("Player Collision");
 
 				if (eggActive == false) App->audio->PlayFx(bonus_fx);
-				if (eggActive == true) App->audio->PlayFx(bonus_fx);
+				//if (eggActive == true) App->audio->PlayFx(bonusOp_fx);
 			}
 		}
 	}
@@ -959,7 +968,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			LOG("Player Collision");
 			App->player->createball = true;
 
-			App->audio->PlayFx(bonus_fx);
+			App->audio->PlayFx(multiBall_fx);
 		}
 	}
 
@@ -972,7 +981,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			LOG("Player Collision");
 			App->player->createball = true;
 
-			//App->audio->PlayFx(bonus_fx);
+			App->audio->PlayFx(egg_fx);
 		}
 	}
 
@@ -985,7 +994,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			LOG("Player Collision");
 			App->player->createball = true;
 
-			App->audio->PlayFx(bonus_fx);
+			App->audio->PlayFx(multiBall_fx);
 		}
 	}
 }

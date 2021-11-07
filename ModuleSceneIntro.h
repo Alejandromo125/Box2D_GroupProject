@@ -27,5 +27,5 @@ public:
 	bool transition;
 
 	int delay;
-
+	int trackID;
 };

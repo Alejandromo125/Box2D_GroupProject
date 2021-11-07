@@ -102,6 +102,11 @@ public:
 	SDL_Texture* bouncer = nullptr;
 
 	uint bonus_fx;
+	uint egg_fx;
+	uint ring_fx;
+	uint multiBall_fx;
+	uint bonusOp_fx;
+
 	p2Point<int> ray;
 	bool ray_on;
 	int delay;

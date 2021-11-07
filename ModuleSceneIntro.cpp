@@ -37,6 +37,7 @@ bool ModuleSceneIntro::Start()
 	delay = 0;
 	transitionTimer = 0;
 	transition = false;
+	trackID = 0;
 
 	//App->player->Disable();
 	//App->scene_game->Disable();
@@ -79,7 +80,21 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE)==KEY_DOWN)
 	{
 		Mix_PauseMusic();
-		transition = true;
+		if (transition == false)
+		{
+			transition = true;
+		}
+		trackID = 2;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		Mix_PauseMusic();
+		if (transition == false)
+		{
+			transition = true;
+		}
+		trackID = 1;
 	}
 
 	if (transitionTimer > 150)
