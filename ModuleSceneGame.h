@@ -99,6 +99,7 @@ public:
 	SDL_Texture* eggEffect = nullptr;
 	SDL_Texture* ringEffect = nullptr;
 	SDL_Texture* sceneUI = nullptr;
+	SDL_Texture* bouncer = nullptr;
 
 	uint bonus_fx;
 	p2Point<int> ray;
@@ -122,6 +123,7 @@ public:
 	int bonusBall4PositionX = 0, bonusBall4PositionY = 0;
 	int bonusBall5PositionX = 0, bonusBall5PositionY = 0;
 	int bonusBall6PositionX = 0, bonusBall6PositionY = 0;
+	int bouncerPositionX = 0, bouncerPositionY = 0;
 
 	int LeftStickPosX = 0, LeftStickPosY = 0;
 	int RightStickPosX = 0, RightStickPosY = 0;

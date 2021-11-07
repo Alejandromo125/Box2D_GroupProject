@@ -108,6 +108,7 @@ bool ModuleSceneGame::Start()
 	sceneUI = App->textures->Load("pinball/sceneGameUI.png");
 	blueFourArrows = App->textures->Load("pinball/blueFourArrows.png");
 	yellowTwoArrows = App->textures->Load("pinball/yellowTwoArrows.png");
+	bouncer = App->textures->Load("pinball/spring.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -487,6 +488,7 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(timeUp);
 	App->textures->Unload(blueFourArrows);
 	App->textures->Unload(yellowTwoArrows);
+	App->textures->Unload(bouncer);
 
 	App->scene_game->RightStickBody->body->DestroyFixture(App->scene_game->RightStickBody->body->GetFixtureList());
 	App->scene_game->LeftStickBody->body->DestroyFixture(App->scene_game->LeftStickBody->body->GetFixtureList());
@@ -634,6 +636,9 @@ update_status ModuleSceneGame::Update()
 
 	LeftStickBody->GetPosition(LeftStickPosX, LeftStickPosY);
 	App->renderer->Blit(LeftStick, LeftStickPosX - 10, LeftStickPosY - 30, NULL, 1.0f, LeftStickBody->GetRotation() - 20, 10, 20);
+
+	Bouncer->GetPosition(bouncerPositionX, bouncerPositionY);
+	App->renderer->Blit(bouncer, bouncerPositionX, bouncerPositionY, NULL, 1.0f, Bouncer->GetRotation());
 
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
