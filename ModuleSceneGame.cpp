@@ -331,7 +331,7 @@ bool ModuleSceneGame::Start()
 	616, 210
 	};
 
-	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints9, 6));
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints9, 26));
 
 	int mapPoints8[24] = {
 	341, 421,
