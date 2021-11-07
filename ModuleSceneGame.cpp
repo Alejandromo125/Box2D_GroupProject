@@ -112,8 +112,6 @@ bool ModuleSceneGame::Start()
 	bouncer = App->textures->Load("pinball/spring.png");
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
-	bonusOp_fx = App->audio->LoadFx("pinball/bonusOp.wav");
-	ring_fx = App->audio->LoadFx("pinball/ring.wav");
 	egg_fx = App->audio->LoadFx("pinball/egg.wav");
 	multiBall_fx = App->audio->LoadFx("pinball/multiBall.wav");
 
@@ -865,8 +863,6 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				position.y = 820;
 
 				score = score - 50;
-
-				App->audio->PlayFx(bonusOp_fx);
 
 				LOG("Player Collision");
 				App->player->player->body->GetFixtureList()->SetFilterData(filter);
