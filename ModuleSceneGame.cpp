@@ -315,6 +315,24 @@ bool ModuleSceneGame::Start()
 
 	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints7, 6));
 
+	int mapPoints9[26] = {
+	609, 202,
+	633, 201,
+	656, 188,
+	664, 167,
+	667, 133,
+	670, 133,
+	670, 164,
+	664, 191,
+	651, 208,
+	640, 217,
+	630, 225,
+	623, 223,
+	616, 210
+	};
+
+	mapLimits.add(App->physics->CreateChain(0, 0, mapPoints9, 6));
+
 	int mapPoints8[24] = {
 	341, 421,
 	329, 421,
@@ -375,8 +393,6 @@ bool ModuleSceneGame::Start()
 	bumpersBodys.add(App->physics->CreateStaticCircle(465, 196, 26));
 	bumpersBodys.getLast()->data->listener = this;
 	bumpersBodys.add(App->physics->CreateStaticCircle(583, 228, 26));
-	bumpersBodys.getLast()->data->listener = this;
-	bumpersBodys.add(App->physics->CreateStaticCircle(628, 210, 16));
 	bumpersBodys.getLast()->data->listener = this;
 
 
